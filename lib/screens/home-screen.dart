@@ -74,7 +74,6 @@ class HomeScreen extends StatelessWidget {
                           style: TextStyle(
                             fontSize: size.width * 0.06,
                             fontWeight: FontWeight.bold,
-                            letterSpacing: size.width * 0.005,
                             color: AppColors.blueTextColor,
                             // decoration: TextDecoration.underline,
                           ),
@@ -82,7 +81,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        width: size.width * 0.38,
+                        width: size.width * 0.34,
                         height: size.height * 0.003,
                         decoration: BoxDecoration(
                           color: AppColors.blueTextColor,
@@ -99,7 +98,6 @@ class HomeScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: size.width * 0.04,
                           fontWeight: FontWeight.bold,
-                          letterSpacing: size.width * 0.005,
                           color: AppColors.blueTextColor,
                         ),
                         textAlign: TextAlign.center,
@@ -109,7 +107,6 @@ class HomeScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: size.width * 0.04,
                           fontWeight: FontWeight.bold,
-                          letterSpacing: size.width * 0.005,
                           color: AppColors.blueTextColor,
                         ),
                         textAlign: TextAlign.center,
@@ -127,7 +124,6 @@ class HomeScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: size.width * 0.04,
                           fontWeight: FontWeight.bold,
-                          letterSpacing: size.width * 0.005,
                           color: AppColors.blueTextColor,
                         ),
                         textAlign: TextAlign.center,
@@ -137,7 +133,6 @@ class HomeScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: size.width * 0.04,
                           fontWeight: FontWeight.bold,
-                          letterSpacing: size.width * 0.005,
                           color: AppColors.blueTextColor,
                         ),
                       ),
@@ -146,7 +141,6 @@ class HomeScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: size.width * 0.04,
                           fontWeight: FontWeight.bold,
-                          letterSpacing: size.width * 0.005,
                           color: AppColors.blueTextColor,
                         ),
                       ),
@@ -163,7 +157,6 @@ class HomeScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: size.width * 0.04,
                           fontWeight: FontWeight.bold,
-                          letterSpacing: size.width * 0.005,
                           color: AppColors.blueTextColor,
                         ),
                         textAlign: TextAlign.center,
@@ -173,7 +166,6 @@ class HomeScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: size.width * 0.04,
                           fontWeight: FontWeight.bold,
-                          letterSpacing: size.width * 0.005,
                           color: AppColors.blueTextColor,
                         ),
                         textAlign: TextAlign.center,
@@ -183,7 +175,6 @@ class HomeScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: size.width * 0.04,
                           fontWeight: FontWeight.bold,
-                          letterSpacing: size.width * 0.005,
                           color: AppColors.blueTextColor,
                         ),
                         textAlign: TextAlign.center,
@@ -201,7 +192,6 @@ class HomeScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: size.width * 0.04,
                           fontWeight: FontWeight.bold,
-                          letterSpacing: size.width * 0.005,
                           color: AppColors.blueTextColor,
                         ),
                         textAlign: TextAlign.center,
@@ -211,7 +201,6 @@ class HomeScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: size.width * 0.04,
                           fontWeight: FontWeight.bold,
-                          letterSpacing: size.width * 0.005,
                           color: AppColors.blueTextColor,
                         ),
                         textAlign: TextAlign.center,
@@ -221,7 +210,6 @@ class HomeScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: size.width * 0.04,
                           fontWeight: FontWeight.bold,
-                          letterSpacing: size.width * 0.005,
                           color: AppColors.blueTextColor,
                         ),
                         textAlign: TextAlign.center,
@@ -239,7 +227,6 @@ class HomeScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: size.width * 0.04,
                           fontWeight: FontWeight.bold,
-                          letterSpacing: size.width * 0.005,
                           color: AppColors.blueTextColor,
                         ),
                         textAlign: TextAlign.center,
@@ -249,7 +236,6 @@ class HomeScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: size.width * 0.04,
                           fontWeight: FontWeight.bold,
-                          letterSpacing: size.width * 0.005,
                           color: AppColors.blueTextColor,
                         ),
                       ),
@@ -258,7 +244,6 @@ class HomeScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: size.width * 0.04,
                           fontWeight: FontWeight.bold,
-                          letterSpacing: size.width * 0.005,
                           color: AppColors.blueTextColor,
                         ),
                       ),

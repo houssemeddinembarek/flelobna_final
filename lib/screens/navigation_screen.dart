@@ -48,23 +48,38 @@ class _NavigationScreenState extends State<NavigationScreen> {
           decoration: BoxDecoration(
               // borderRadius: BorderRadius.all(Radius.circular(25))
               ),
-          padding: EdgeInsets.symmetric(horizontal: 32),
+          padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               IconButton(
-                icon: Container(
-                    // height: size.height * 0.05,
-                    // width: size.width * 0.12,
-                    child: ClipOval(
-                  child: Image.asset(
-                    'assets/images/apprenez.png',
-                    width: size.width * 0.12,
-                    height: size.width * 0.12,
-                    fit: BoxFit.cover,
-                  ),
-                )),
+                icon: Column(
+                  children: [
+                    Container(
+                        height: size.width * 0.06,
+                        width: size.width * 0.06,
+                        child: ClipOval(
+                          child: Image.asset(
+                            'assets/images/apprenez.png',
+                            width: size.width * 0.12,
+                            height: size.width * 0.12,
+                            fit: BoxFit.cover,
+                          ),
+                        )),
+                    SizedBox(
+                      height: size.height * 0.005,
+                    ),
+                    Text(
+                      'Liste des PDF',
+                      style: TextStyle(
+                        fontSize: 8,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.blueTextColor,
+                      ),
+                    )
+                  ],
+                ),
                 color: _currentIndex == 0 ? Colors.yellow : Colors.white,
                 onPressed: () {
                   _pageController.jumpToPage(0);
@@ -74,16 +89,32 @@ class _NavigationScreenState extends State<NavigationScreen> {
                 },
               ),
               IconButton(
-                icon: Container(
-                  height: size.height * 0.06,
-                  child: ClipOval(
-                    child: Image.asset(
-                      'assets/images/bonvoyage11.jpg',
-                      width: size.width * 0.12,
-                      height: size.width * 0.12,
-                      fit: BoxFit.cover,
+                icon: Column(
+                  children: [
+                    Container(
+                      height: size.width * 0.06,
+                      width: size.width * 0.06,
+                      child: ClipOval(
+                        child: Image.asset(
+                          'assets/images/bonvoyage11.jpg',
+                          width: size.width * 0.12,
+                          height: size.width * 0.12,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
-                  ),
+                    SizedBox(
+                      height: size.height * 0.005,
+                    ),
+                    Text(
+                      '11 éme Année',
+                      style: TextStyle(
+                        fontSize: 8,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.blueTextColor,
+                      ),
+                    )
+                  ],
                 ),
                 color: _currentIndex == 1 ? Colors.yellow : Colors.white,
                 onPressed: () {
@@ -96,17 +127,32 @@ class _NavigationScreenState extends State<NavigationScreen> {
               IconButton(
                 icon: Container(
                     height: size.height * 0.06,
-                    child: Container(
-                      // height: size.height * 0.05,
-                      // width: size.width * 0.12,
-                      child: ClipOval(
-                        child: Image.asset(
-                          'assets/images/bonvoyage12.jpg',
-                          width: size.width * 0.12,
-                          height: size.width * 0.12,
-                          fit: BoxFit.cover,
+                    child: Column(
+                      children: [
+                        Container(
+                          height: size.width * 0.06,
+                          width: size.width * 0.06,
+                          child: ClipOval(
+                            child: Image.asset(
+                              'assets/images/bonvoyage12.jpg',
+                              width: size.width * 0.12,
+                              height: size.width * 0.12,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
-                      ),
+                        SizedBox(
+                          height: size.height * 0.005,
+                        ),
+                        Text(
+                          '12 éme Année',
+                          style: TextStyle(
+                            fontSize: 8,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.blueTextColor,
+                          ),
+                        )
+                      ],
                     )),
                 color: _currentIndex == 2 ? Colors.yellow : Colors.white,
                 onPressed: () {
@@ -117,14 +163,30 @@ class _NavigationScreenState extends State<NavigationScreen> {
                 },
               ),
               IconButton(
-                icon: Container(
-                    height: size.height * 0.06,
-                    child: Image.asset(
-                      'assets/icons/instructor.png',
-                      color: _currentIndex == 3
-                          ? Colors.cyan.withOpacity(0.7)
-                          : Colors.white,
-                    )),
+                icon: Column(
+                  children: [
+                    Container(
+                        height: size.width * 0.06,
+                        width: size.width * 0.06,
+                        child: Image.asset(
+                          'assets/icons/instructor.png',
+                          color: _currentIndex == 3
+                              ? Colors.cyan.withOpacity(0.7)
+                              : Colors.white,
+                        )),
+                    SizedBox(
+                      height: size.height * 0.005,
+                    ),
+                    Text(
+                      'Equipe de Travail',
+                      style: TextStyle(
+                        fontSize: 8,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.blueTextColor,
+                      ),
+                    )
+                  ],
+                ),
                 onPressed: () {
                   _pageController.jumpToPage(3);
                   setState(() {
