@@ -29,18 +29,18 @@ class VideoScreen12 extends StatelessWidget {
         elevation: 0,
         backgroundColor: AppColors.blueBgTop,
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          height: size.height,
-          width: size.width,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [AppColors.blueBgTop, AppColors.blueBgBottom],
-            ),
+      body: Container(
+        height: size.height,
+        width: size.width,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [AppColors.blueBgTop, AppColors.blueBgBottom],
           ),
-          padding: EdgeInsets.all(size.width * 0.04),
+        ),
+        padding: EdgeInsets.all(size.width * 0.04),
+        child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -79,7 +79,7 @@ class VideoScreen12 extends StatelessWidget {
                     Text(
                       "Ce document audiovisuel est réalisé par les enseignantes",
                       style: TextStyle(
-                        fontSize: size.width * 0.04,
+                        fontSize: size.width * 0.035,
                         fontWeight: FontWeight.bold,
                         letterSpacing: size.width * 0.003,
                         color: AppColors.blueTextColor,
@@ -100,7 +100,7 @@ class VideoScreen12 extends StatelessWidget {
                             Text(
                               "Chahd Alhamdan",
                               style: TextStyle(
-                                fontSize: size.width * 0.04,
+                                fontSize: size.width * 0.035,
                                 fontWeight: FontWeight.bold,
                                 letterSpacing: size.width * 0.003,
                                 color: AppColors.blueTextColor,
@@ -113,7 +113,7 @@ class VideoScreen12 extends StatelessWidget {
                             Text(
                               "Dalal Al Shummeri",
                               style: TextStyle(
-                                fontSize: size.width * 0.04,
+                                fontSize: size.width * 0.035,
                                 fontWeight: FontWeight.bold,
                                 letterSpacing: size.width * 0.003,
                                 color: AppColors.blueTextColor,
@@ -129,7 +129,7 @@ class VideoScreen12 extends StatelessWidget {
                           child: Text(
                             "Imen Ramzi",
                             style: TextStyle(
-                              fontSize: size.width * 0.04,
+                              fontSize: size.width * 0.035,
                               fontWeight: FontWeight.bold,
                               letterSpacing: size.width * 0.003,
                               color: AppColors.blueTextColor,
@@ -145,7 +145,7 @@ class VideoScreen12 extends StatelessWidget {
                     Text(
                       "Sous la direction du chef de département ",
                       style: TextStyle(
-                        fontSize: size.width * 0.04,
+                        fontSize: size.width * 0.035,
                         fontWeight: FontWeight.bold,
                         letterSpacing: size.width * 0.003,
                         color: AppColors.blueTextColor,
@@ -158,7 +158,7 @@ class VideoScreen12 extends StatelessWidget {
                     Text(
                       "Mme Raoudha Boujnaieh ",
                       style: TextStyle(
-                        fontSize: size.width * 0.04,
+                        fontSize: size.width * 0.035,
                         fontWeight: FontWeight.bold,
                         letterSpacing: size.width * 0.003,
                         color: AppColors.blueTextColor,
@@ -171,7 +171,7 @@ class VideoScreen12 extends StatelessWidget {
                     Text(
                       "Mme Rafa Alguenai",
                       style: TextStyle(
-                        fontSize: size.width * 0.04,
+                        fontSize: size.width * 0.035,
                         fontWeight: FontWeight.bold,
                         letterSpacing: size.width * 0.003,
                         color: AppColors.blueTextColor,

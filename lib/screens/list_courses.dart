@@ -129,22 +129,11 @@ class _ListCoursesState extends State<ListCourses> {
     return Theme.of(context).platform == TargetPlatform.iOS;
   }
 
-  // Future<void> signInWithApple() async {
-  //   try {
-  //     final result = await SignInWithApple.channel.();
-  //
-  //     if (result.status == SignInWithAppleStatus.authorized) {
-  //       // User signed in successfully with Apple ID
-  //       // You can use result.credential to get the Apple ID credentials
-  //       print('Apple ID signed in successfully! Credential: ${result.credential}');
-  //     } else {
-  //       // User canceled the Apple ID sign in
-  //       print('Apple ID sign in canceled.');
-  //     }
-  //   } catch (error) {
-  //     print('Error signing in with Apple ID: $error');
-  //   }
-  // }
+  Future<void> signOutFromApple() async {
+    await GetStorage().remove('email');
+    await GetStorage().remove('familyName');
+    await GetStorage().remove('givenName');
+  }
 
   void showConnectWithAppleDialog() {
     showDialog(
@@ -152,16 +141,28 @@ class _ListCoursesState extends State<ListCourses> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              GetStorage().read('familyName') != null ?
+              ElevatedButton(
+                onPressed: () async {
+                  await signOutFromApple();
+                  Navigator.of(context).pop();
+                },
+                child: Text('Sign Out'),
+              ): Container(),
               GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.of(context).pop();
                   },
-                  child: Icon(Icons.cancel_outlined,color: Colors.red,))
+                  child: Icon(
+                    Icons.cancel_outlined,
+                    color: Colors.red,
+                  ))
             ],
           ),
-          content: Text('Souhaitez-vous vous connecter avec votre identifiant Apple?'),
+          content: Text(
+              'Souhaitez-vous vous connecter avec votre identifiant Apple?'),
           actions: <Widget>[
             SignInWithAppleButton(
               onPressed: () async {
@@ -178,7 +179,8 @@ class _ListCoursesState extends State<ListCourses> {
 
                 print(credential);
               },
-            )
+            ),
+
           ],
         );
       },
