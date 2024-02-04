@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "558851719299",
+    "project_id": "flelobna",
+    "storage_bucket": "flelobna.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:558851719299:android:b5f3b7128518ca48d25bb6",
+        "android_client_info": {
+          "package_name": "com.alphadev.flelobna.flelobna"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwsXkj3DXRksdydPt4WoNHT_5RtpVTHAk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:558851719299:android:fbb746e0e2079437d25bb6",
+        "android_client_info": {
+          "package_name": "com.alphadev.flelobnaadmin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwsXkj3DXRksdydPt4WoNHT_5RtpVTHAk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:558851719299:android:c78dac47ae11ce61d25bb6",
+        "android_client_info": {
+          "package_name": "com.example.ritchess"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwsXkj3DXRksdydPt4WoNHT_5RtpVTHAk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
