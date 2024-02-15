@@ -55,7 +55,7 @@ class VideoScreen12 extends StatelessWidget {
               ),
               Container(
                 width: size.width * 0.9,
-                height: size.height * 0.4,
+                // height: size.height * 0.4,
                 padding: EdgeInsets.all(size.width * 0.04),
                 decoration: BoxDecoration(
                     color: AppColors.whiteFlue,

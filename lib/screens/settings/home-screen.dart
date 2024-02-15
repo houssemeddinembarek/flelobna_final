@@ -1,5 +1,5 @@
 import 'package:flelobna/constants/app_colors.dart';
-import 'package:flelobna/screens/introduction-screen.dart';
+import 'package:flelobna/screens/objectif/introduction-screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

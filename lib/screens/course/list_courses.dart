@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flelobna/constants/app_colors.dart';
 import 'package:flelobna/models/course.dart';
-import 'package:flelobna/screens/detail_course.dart';
+import 'package:flelobna/screens/course/detail_course.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -17,15 +17,6 @@ class ListCourses extends StatefulWidget {
 class _ListCoursesState extends State<ListCourses> {
   CourseController courseController = Get.put(CourseController());
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   courseController.fetchCourses();
-  //   courseController.filteredList.assignAll(
-  //       courseController.courses);
-  //   print(courseController.coursesList.value);
-  //   print(courseController.courses.value);
-  // }
 
   bool isIOS() {
     return Theme.of(context).platform == TargetPlatform.iOS;
@@ -139,6 +130,8 @@ class _ListCoursesState extends State<ListCourses> {
             TextField(
               onChanged: (query) {
                 courseController.filterList(query);
+
+
               },
               decoration: InputDecoration(
                 labelText: 'Rechercher',
@@ -186,7 +179,7 @@ class _ListCoursesState extends State<ListCourses> {
                                 SizedBox(
                                   width: size.width * 0.2,
                                   height: size.height * 0.15,
-                                  child: Image.network(course.couverture),
+                                  child: Image.network(course.couverture!),
                                 ),
                                 Container(
                                   width: size.width * 0.5,
@@ -197,7 +190,7 @@ class _ListCoursesState extends State<ListCourses> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        course.name,
+                                        course.name!,
                                         style: TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.bold),

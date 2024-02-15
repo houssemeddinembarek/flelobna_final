@@ -1,6 +1,7 @@
 import 'package:flelobna/constants/app_colors.dart';
 import 'package:flelobna/screens/instructeur_page.dart';
-import 'package:flelobna/screens/list_courses.dart';
+import 'package:flelobna/screens/course/list_courses.dart';
+import 'package:flelobna/screens/settings/settings_screen.dart';
 import 'package:flelobna/screens/video_screen.dart';
 import 'package:flelobna/screens/video_screen12.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,8 @@ class _NavigationScreenState extends State<NavigationScreen> {
     VideoScreen12(
       videoAssets: ['assets/video/video12.mp4'],
     ),
-    InstructeurPage()
+    // InstructeurPage(),
+    SettingsScreen()
   ];
 
   @override
@@ -61,17 +63,20 @@ class _NavigationScreenState extends State<NavigationScreen> {
                         width: size.width * 0.06,
                         child: ClipOval(
                           child: Image.asset(
-                            'assets/images/apprenez.png',
+                            'assets/icons/instructor.png',
                             width: size.width * 0.12,
                             height: size.width * 0.12,
                             fit: BoxFit.cover,
+                            color: _currentIndex == 0
+                                ? Colors.cyan.withOpacity(0.7)
+                                : Colors.white,
                           ),
                         )),
                     SizedBox(
                       height: size.height * 0.005,
                     ),
                     Text(
-                      'Liste des PDF',
+                      'Revues',
                       style: TextStyle(
                         fontSize: 8,
                         fontWeight: FontWeight.bold,
@@ -96,10 +101,13 @@ class _NavigationScreenState extends State<NavigationScreen> {
                       width: size.width * 0.06,
                       child: ClipOval(
                         child: Image.asset(
-                          'assets/images/bonvoyage11.jpg',
+                          'assets/icons/video.png',
                           width: size.width * 0.12,
                           height: size.width * 0.12,
                           fit: BoxFit.cover,
+                          color: _currentIndex == 1
+                              ? Colors.cyan.withOpacity(0.7)
+                              : Colors.white,
                         ),
                       ),
                     ),
@@ -107,7 +115,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
                       height: size.height * 0.005,
                     ),
                     Text(
-                      '11 éme Année',
+                      '11 éme',
                       style: TextStyle(
                         fontSize: 8,
                         fontWeight: FontWeight.bold,
@@ -134,10 +142,13 @@ class _NavigationScreenState extends State<NavigationScreen> {
                           width: size.width * 0.06,
                           child: ClipOval(
                             child: Image.asset(
-                              'assets/images/bonvoyage12.jpg',
-                              width: size.width * 0.12,
-                              height: size.width * 0.12,
+                              'assets/icons/video.png',
+                              height: size.width * 0.06,
+                              width: size.width * 0.06,
                               fit: BoxFit.cover,
+                              color: _currentIndex == 2
+                                  ? Colors.cyan.withOpacity(0.7)
+                                  : Colors.white,
                             ),
                           ),
                         ),
@@ -145,7 +156,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
                           height: size.height * 0.005,
                         ),
                         Text(
-                          '12 éme Année',
+                          '12 éme',
                           style: TextStyle(
                             fontSize: 8,
                             fontWeight: FontWeight.bold,
@@ -168,8 +179,8 @@ class _NavigationScreenState extends State<NavigationScreen> {
                     Container(
                         height: size.width * 0.06,
                         width: size.width * 0.06,
-                        child: Image.asset(
-                          'assets/icons/instructor.png',
+                        child: Icon(
+                          Icons.settings,
                           color: _currentIndex == 3
                               ? Colors.cyan.withOpacity(0.7)
                               : Colors.white,
@@ -178,7 +189,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
                       height: size.height * 0.005,
                     ),
                     Text(
-                      'Equipe de Travail',
+                      'Settings',
                       style: TextStyle(
                         fontSize: 8,
                         fontWeight: FontWeight.bold,

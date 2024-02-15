@@ -1,8 +1,11 @@
 import 'package:flelobna/constants/app_colors.dart';
-import 'package:flelobna/screens/home-screen.dart';
+import 'package:flelobna/screens/auth/login_screen.dart';
+import 'package:flelobna/screens/settings/home-screen.dart';
+import 'package:flelobna/screens/navigation_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -12,7 +15,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   void initState() {
     _navigateToHome();
     super.initState();
@@ -20,7 +22,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _navigateToHome() async {
     await Future.delayed(Duration(milliseconds: 4000), () {});
-    Get.offAll(HomeScreen());
+    // Get.offAll(HomeScreen());
+    if (GetStorage().read('email') != null) {
+      Get.offAll(NavigationScreen());
+    } else {
+      Get.offAll(LoginPage());
+    }
   }
 
   @override
