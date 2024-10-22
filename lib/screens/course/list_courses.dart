@@ -17,7 +17,6 @@ class ListCourses extends StatefulWidget {
 class _ListCoursesState extends State<ListCourses> {
   CourseController courseController = Get.put(CourseController());
 
-
   bool isIOS() {
     return Theme.of(context).platform == TargetPlatform.iOS;
   }
@@ -127,17 +126,27 @@ class _ListCoursesState extends State<ListCourses> {
         ),
         child: Column(
           children: [
-            TextField(
-              onChanged: (query) {
-                courseController.filterList(query);
-
-
-              },
-              decoration: InputDecoration(
-                labelText: 'Rechercher',
-                hintText: 'Veuillez saisir le nom d\'un revue',
-                prefixIcon: Icon(Icons.search),
+            SizedBox(
+              height: size.height * 0.08,
+              child: TextField(
+                onChanged: (query) {
+                  courseController.filterList(query);
+                },
+                decoration: InputDecoration(
+                  labelText: 'Rechercher',
+                  hintText: 'Veuillez saisir le nom d\'un revue',
+                  prefixIcon: Icon(Icons.search),
+                  fillColor: Colors.white54,
+                  filled: true,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
               ),
+            ),
+            SizedBox(
+              height: size.height * 0.01,
             ),
             Expanded(
                 child: Obx(() => ListView.separated(

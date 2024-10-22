@@ -7,7 +7,7 @@ import 'package:flelobna/constants/app_colors.dart';
 import 'package:flelobna/firebase_options.dart';
 import 'package:flelobna/screens/splash-screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,26 +28,26 @@ void main() async {
   FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
   // Local Notifications Plugin
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  // FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   // Android Initialization
-  const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
+  // const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
 
   // iOS/Darwin Initialization
-  const DarwinInitializationSettings initializationSettingsIOS = DarwinInitializationSettings(
-    requestAlertPermission: true,
-    requestBadgePermission: true,
-    requestSoundPermission: true,
-  );
+  // const DarwinInitializationSettings initializationSettingsIOS = DarwinInitializationSettings(
+  //   requestAlertPermission: true,
+  //   requestBadgePermission: true,
+  //   requestSoundPermission: true,
+  // );
 
   // General Initialization Settings
-  final InitializationSettings initializationSettings = InitializationSettings(
-    android: initializationSettingsAndroid,
-    iOS: initializationSettingsIOS,
-  );
+  // final InitializationSettings initializationSettings = InitializationSettings(
+  //   android: initializationSettingsAndroid,
+  //   iOS: initializationSettingsIOS,
+  // );
 
   // Initialize local notifications
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  // await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
   // Setting up background message handler
   FirebaseMessaging.onBackgroundMessage(backgroundMessageHandler);

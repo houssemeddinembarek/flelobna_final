@@ -168,7 +168,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           });
                         },
                       ),
-                    ),
+                      ),
                     validator: (input) {
                       if (input!.isEmpty) {
                         return 'Please enter your password';

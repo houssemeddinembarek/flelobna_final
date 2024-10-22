@@ -6,6 +6,7 @@ import 'package:flelobna/screens/objectif/introduction_arabe_screen.dart';
 import 'package:flelobna/screens/settings/home-screen.dart';
 import 'package:flelobna/screens/instructeur_page.dart';
 import 'package:flelobna/screens/objectif/introduction-screen.dart';
+import 'package:flelobna/screens/settings/settings_button.dart';
 import 'package:flelobna/widgets/edit_name_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -89,290 +90,270 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            'Paramètre',
-            style: TextStyle(
-              fontSize: size.width * 0.05,
-              fontWeight: FontWeight.bold,
-              letterSpacing: size.width * 0.003,
-              color: AppColors.blueTextColor,
-            ),
+        title: SizedBox(
+          width: size.width * 0.9,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Paramètre',
+                style: TextStyle(
+                  fontSize: size.width * 0.05,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: size.width * 0.003,
+                  color: AppColors.blueTextColor,
+                ),
+              ),
+              ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(60)),
+                  child: Container(
+                    width: size.width * 0.1,
+                    height: size.width * 0.1,
+                    color: AppColors.blueTextColor,
+                    child: GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return EditNameDialog(
+                                initialFirstName:
+                                    authController.userDetail.value.firstName,
+                                initialLastName:
+                                    authController.userDetail.value.lastName,
+                              );
+                            },
+                          );
+                        },
+                        child: Icon(
+                          Icons.edit,
+                          color: AppColors.whiteFlue,
+                        )),
+                  )),
+            ],
           ),
         ),
         backgroundColor: AppColors.blueBgTop,
         elevation: 0,
       ),
       body: Container(
-        width: size.width,
-        height: size.height,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [AppColors.blueBgTop, AppColors.blueBgBottom],
-          ),
-        ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: size.width * 0.05,
-            horizontal: size.width * 0.05,
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Obx(() => authController.loadinSettingsScreen.value
-                    ? Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : Container(
-                        width: size.width * 0.8,
-                        height: size.height * 0.22,
-                        decoration: BoxDecoration(
-                          color: Colors.white54,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.cyan.withOpacity(0.3),
-                              offset: Offset(0, 2),
-                              blurRadius: 4,
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                                width: size.width * 0.7,
-                                alignment: Alignment.centerRight,
-                                child: GestureDetector(
-                                    onTap: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return EditNameDialog(
-                                            initialFirstName: authController
-                                                .userDetail.value.firstName,
-                                            initialLastName: authController
-                                                .userDetail.value.lastName,
-                                          );
-                                        },
-                                      );
-                                      print('edit user');
-                                    },
-                                    child: Icon(Icons.edit))),
-                            SizedBox(
-                              height: size.height * 0.02,
-                            ),
-                            Container(
-                              width: size.width * 0.7,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text('Email: ',
-                                      style: TextStyle(
-                                        fontSize: size.width * 0.04,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.GreeFonce,
-                                      )),
-                                  Text(
-                                      authController.userDetail.value.email
-                                          .toString(),
-                                      style: TextStyle(
-                                        fontSize: size.width * 0.04,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.GreeFonce,
-                                      )),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: size.width * 0.7,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text('Prenom: ',
-                                      style: TextStyle(
-                                        fontSize: size.width * 0.04,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.GreeFonce,
-                                      )),
-                                  Text(
-                                      authController.userDetail.value.firstName
-                                          .toString(),
-                                      style: TextStyle(
-                                        fontSize: size.width * 0.04,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.GreeFonce,
-                                      )),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: size.width * 0.7,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text('Nom: ',
-                                      style: TextStyle(
-                                        fontSize: size.width * 0.04,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.GreeFonce,
-                                      )),
-                                  Text(
-                                      authController.userDetail.value.lastName
-                                          .toString(),
-                                      style: TextStyle(
-                                        fontSize: size.width * 0.04,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.GreeFonce,
-                                      )),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: size.height * 0.02,
-                            ),
-                          ],
-                        ),
-                      )),
-                SizedBox(
-                  height: size.height * 0.04,
-                ),
-                Container(
-                  width: size.width * 0.8,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(5))),
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      if (GetStorage().read('familyName') != null &&
-                          GetStorage().read('givenName') != null) {
-                        signOut();
-                      } else {
-                        await FirebaseAuth.instance.signOut();
-                        deleteEmail();
-                        Get.offAll(LoginPage(),
-                            transition: Transition.rightToLeft);
-                      }
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.logout),
-                        SizedBox(
-                          width: size.width * 0.04,
-                        ),
-                        Text('Se Deconnecter'),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: size.height * 0.01,
-                ),
-                Container(
-                  width: size.width * 0.8,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(5))),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Get.to(() => IntroductionScreen(),
-                          transition: Transition.rightToLeft);
-                    },
-                    child: Text('Objectif'),
-                  ),
-                ),
-                SizedBox(
-                  height: size.height * 0.01,
-                ),
-                Container(
-                  width: size.width * 0.8,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(5))),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Get.to(() => IntroductionArabeScreen(),
-                          transition: Transition.rightToLeft);
-                    },
-                    child: Text('الهدف من هذه التطبيقة'),
-                  ),
-                ),
-                SizedBox(
-                  height: size.height * 0.01,
-                ),
-                Container(
-                  width: size.width * 0.8,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(5))),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Get.to(() => HomeScreen(),
-                          transition: Transition.rightToLeft);
-                    },
-                    child: Text('Equipe Administrative'),
-                  ),
-                ),
-                SizedBox(
-                  height: size.height * 0.01,
-                ),
-                Container(
-                  width: size.width * 0.8,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(5))),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Get.to(() => InstructeurPage(),
-                          transition: Transition.rightToLeft);
-                    },
-                    child: Text('Equipe de travail'),
-                  ),
-                ),
-                SizedBox(
-                  height: size.height * 0.01,
-                ),
-                Container(
-                  width: size.width * 0.8,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(5))),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (GetStorage().read('familyName') != null &&
-                          GetStorage().read('givenName') != null) {
-                        signOut();
-                      } else {
-                        deleteUserAccount(context);
-                        Get.offAll(LoginPage(),
-                            transition: Transition.rightToLeft);
-                      }
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.delete_forever,
-                          color: Colors.red,
-                        ),
-                        SizedBox(
-                          width: size.width * 0.04,
-                        ),
-                        Text(
-                          'Supprimer votre compte',
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+          width: size.width,
+          height: size.height,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [AppColors.blueBgTop, AppColors.blueBgBottom],
             ),
           ),
-        ),
-      ),
+          child: Obx(
+            () => authController.loadinSettingsScreen.value
+                ? Center(child: CircularProgressIndicator())
+                : Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: size.width * 0.05,
+                      horizontal: size.width * 0.05,
+                    ),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: size.width * 0.9,
+                            height: size.height * 0.22,
+                            decoration: BoxDecoration(
+                              color: Colors.white54.withOpacity(0.3),
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.cyan.withOpacity(0.3),
+                                  offset: Offset(0, 2),
+                                  blurRadius: 4,
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: size.height * 0.01,
+                                ),
+                                Container(
+                                  width: size.width * 0.7,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text('Email: ',
+                                          style: TextStyle(
+                                            fontSize: size.width * 0.04,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.GreeFonce,
+                                          )),
+                                      Text(
+                                          authController.userDetail.value.email
+                                              .toString(),
+                                          style: TextStyle(
+                                            fontSize: size.width * 0.04,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.GreeFonce,
+                                          )),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  width: size.width * 0.7,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text('Prenom: ',
+                                          style: TextStyle(
+                                            fontSize: size.width * 0.04,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.GreeFonce,
+                                          )),
+                                      Text(
+                                          authController
+                                              .userDetail.value.firstName
+                                              .toString(),
+                                          style: TextStyle(
+                                            fontSize: size.width * 0.04,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.GreeFonce,
+                                          )),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  width: size.width * 0.7,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text('Nom: ',
+                                          style: TextStyle(
+                                            fontSize: size.width * 0.04,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.GreeFonce,
+                                          )),
+                                      Text(
+                                          authController
+                                              .userDetail.value.lastName
+                                              .toString(),
+                                          style: TextStyle(
+                                            fontSize: size.width * 0.04,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.GreeFonce,
+                                          )),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: size.height * 0.02,
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: size.height * 0.04,
+                          ),
+                          SettingsButton(
+                            text: 'Se Deconnecter',
+                            textColor: AppColors.blueTextColor,
+                            icon: Icons.logout,
+                            iconColor: AppColors.blueTextColor,
+                            onTap: () async {
+                              if (GetStorage().read('familyName') != null &&
+                                  GetStorage().read('givenName') != null) {
+                                signOut();
+                              } else {
+                                await FirebaseAuth.instance.signOut();
+                                deleteEmail();
+                                Get.offAll(LoginPage(),
+                                    transition: Transition.rightToLeft);
+                              }
+                            },
+                          ),
+                          SizedBox(
+                            height: size.height * 0.01,
+                          ),
+                          SettingsButton(
+                            text: 'Objectif',
+                            textColor: AppColors.blueTextColor,
+                            icon: Icons.book,
+                            iconColor: AppColors.blueTextColor,
+                            onTap: () {
+                              Get.to(() => IntroductionScreen(),
+                                  transition: Transition.rightToLeft);
+                            },
+                          ),
+                          SizedBox(
+                            height: size.height * 0.01,
+                          ),
+                          SettingsButton(
+                            text: 'الهدف من هذه التطبيقة',
+                            textColor: AppColors.blueTextColor,
+                            icon: Icons.star,
+                            iconColor: AppColors.blueTextColor,
+                            onTap: () {
+                              Get.to(() => IntroductionArabeScreen(),
+                                  transition: Transition.rightToLeft);
+                            },
+                          ),
+                          SizedBox(
+                            height: size.height * 0.01,
+                          ),
+                          SettingsButton(
+                            text: 'Equipe Administrative',
+                            textColor: AppColors.blueTextColor,
+                            icon: Icons.group,
+                            iconColor: AppColors.blueTextColor,
+                            onTap: () {
+                              Get.to(() => HomeScreen(),
+                                  transition: Transition.rightToLeft);
+                            },
+                          ),
+                          SizedBox(
+                            height: size.height * 0.01,
+                          ),
+                          SettingsButton(
+                            text: 'Equipe de travail',
+                            textColor: AppColors.blueTextColor,
+                            icon: Icons.group,
+                            iconColor: AppColors.blueTextColor,
+                            onTap: () {
+                              Get.to(() => InstructeurPage(),
+                                  transition: Transition.rightToLeft);
+                            },
+                          ),
+                          SizedBox(
+                            height: size.height * 0.01,
+                          ),
+                          SettingsButton(
+                            text: 'Supprimer votre compte',
+                            textColor: Colors.red,
+                            icon: Icons.delete_forever,
+                            iconColor: Colors.red,
+                            onTap: () {
+                              if (GetStorage().read('familyName') != null &&
+                                  GetStorage().read('givenName') != null) {
+                                signOut();
+                              } else {
+                                deleteUserAccount(context);
+                                Get.offAll(LoginPage(),
+                                    transition: Transition.rightToLeft);
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+          )),
     );
   }
 }

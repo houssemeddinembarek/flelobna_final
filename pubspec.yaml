@@ -16,10 +16,10 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 3.2.6+7
+version: 3.2.7+8
 
 environment:
-  sdk: '>=3.2.5 <4.0.0'
+  sdk: '3.5.3'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -49,11 +49,12 @@ dependencies:
   shared_preferences: ^2.2.2
   firebase_messaging: ^14.7.14
   flutter_cache_manager: ^3.3.1
-  flutter_local_notifications: ^16.3.2
+#  flutter_local_notifications: ^16.3.2
   firebase_analytics: ^10.8.4
   permission_handler: ^11.2.0
   dio: ^5.4.0
   awesome_dialog: ^3.2.0
+  win32: ^5.2.0
 
 flutter_icons:
   android: true

@@ -1,4 +1,5 @@
 import 'package:flelobna/constants/app_colors.dart';
+import 'package:flelobna/screens/documents/documents_screen.dart';
 import 'package:flelobna/screens/instructeur_page.dart';
 import 'package:flelobna/screens/course/list_courses.dart';
 import 'package:flelobna/screens/settings/settings_screen.dart';
@@ -26,6 +27,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
     VideoScreen12(
       videoAssets: ['assets/video/video12.mp4'],
     ),
+    DocumentsScreen(),
     // InstructeurPage(),
     SettingsScreen()
   ];
@@ -35,6 +37,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: PageView(
+        physics: NeverScrollableScrollPhysics(),
         controller: _pageController,
         children: _pages,
         onPageChanged: (index) {
@@ -47,10 +50,11 @@ class _NavigationScreenState extends State<NavigationScreen> {
         elevation: 0,
         color: AppColors.blueBgTop.withOpacity(0.5),
         child: Container(
+          height: 60,
           decoration: BoxDecoration(
               // borderRadius: BorderRadius.all(Radius.circular(25))
               ),
-          padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+          // padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -93,45 +97,86 @@ class _NavigationScreenState extends State<NavigationScreen> {
                   });
                 },
               ),
-              IconButton(
-                icon: Column(
-                  children: [
-                    Container(
-                      height: size.width * 0.06,
-                      width: size.width * 0.06,
-                      child: ClipOval(
-                        child: Image.asset(
-                          'assets/icons/video.png',
-                          width: size.width * 0.12,
-                          height: size.width * 0.12,
-                          fit: BoxFit.cover,
-                          color: _currentIndex == 1
-                              ? Colors.cyan.withOpacity(0.7)
-                              : Colors.white,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.005,
-                    ),
-                    Text(
-                      '11 éme',
-                      style: TextStyle(
-                        fontSize: 8,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.blueTextColor,
-                      ),
-                    )
-                  ],
-                ),
-                color: _currentIndex == 1 ? Colors.yellow : Colors.white,
-                onPressed: () {
-                  _pageController.jumpToPage(1);
-                  setState(() {
-                    _currentIndex = 1;
-                  });
-                },
-              ),
+              // IconButton(
+              //   icon: Column(
+              //     children: [
+              //       Container(
+              //         height: size.width * 0.06,
+              //         width: size.width * 0.06,
+              //         child: ClipOval(
+              //           child: Image.asset(
+              //             'assets/icons/video.png',
+              //             width: size.width * 0.12,
+              //             height: size.width * 0.12,
+              //             fit: BoxFit.cover,
+              //             color: _currentIndex == 1
+              //                 ? Colors.cyan.withOpacity(0.7)
+              //                 : Colors.white,
+              //           ),
+              //         ),
+              //       ),
+              //       SizedBox(
+              //         height: size.height * 0.005,
+              //       ),
+              //       Text(
+              //         '11 éme',
+              //         style: TextStyle(
+              //           fontSize: 8,
+              //           fontWeight: FontWeight.bold,
+              //           color: AppColors.blueTextColor,
+              //         ),
+              //       )
+              //     ],
+              //   ),
+              //   color: _currentIndex == 1 ? Colors.yellow : Colors.white,
+              //   onPressed: () {
+              //     _pageController.jumpToPage(1);
+              //     setState(() {
+              //       _currentIndex = 1;
+              //     });
+              //   },
+              // ),
+              // IconButton(
+              //   icon: Container(
+              //       height: size.height * 0.06,
+              //       child: Column(
+              //         children: [
+              //           Container(
+              //             height: size.width * 0.06,
+              //             width: size.width * 0.06,
+              //             child: ClipOval(
+              //               child: Image.asset(
+              //                 'assets/icons/video.png',
+              //                 height: size.width * 0.06,
+              //                 width: size.width * 0.06,
+              //                 fit: BoxFit.cover,
+              //                 color: _currentIndex == 2
+              //                     ? Colors.cyan.withOpacity(0.7)
+              //                     : Colors.white,
+              //               ),
+              //             ),
+              //           ),
+              //           SizedBox(
+              //             height: size.height * 0.005,
+              //           ),
+              //           Text(
+              //             '12 éme',
+              //             style: TextStyle(
+              //               fontSize: 8,
+              //               fontWeight: FontWeight.bold,
+              //               color: AppColors.blueTextColor,
+              //             ),
+              //           )
+              //         ],
+              //       )),
+              //   color: _currentIndex == 2 ? Colors.yellow : Colors.white,
+              //   onPressed: () {
+              //     _pageController.jumpToPage(2);
+              //     setState(() {
+              //       _currentIndex = 2;
+              //     });
+              //   },
+              // ),
               IconButton(
                 icon: Container(
                     height: size.height * 0.06,
@@ -146,7 +191,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
                               height: size.width * 0.06,
                               width: size.width * 0.06,
                               fit: BoxFit.cover,
-                              color: _currentIndex == 2
+                              color: _currentIndex == 3
                                   ? Colors.cyan.withOpacity(0.7)
                                   : Colors.white,
                             ),
@@ -156,7 +201,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
                           height: size.height * 0.005,
                         ),
                         Text(
-                          '12 éme',
+                          'Videos',
                           style: TextStyle(
                             fontSize: 8,
                             fontWeight: FontWeight.bold,
@@ -165,11 +210,11 @@ class _NavigationScreenState extends State<NavigationScreen> {
                         )
                       ],
                     )),
-                color: _currentIndex == 2 ? Colors.yellow : Colors.white,
+                color: _currentIndex == 3 ? Colors.yellow : Colors.white,
                 onPressed: () {
-                  _pageController.jumpToPage(2);
+                  _pageController.jumpToPage(3);
                   setState(() {
-                    _currentIndex = 2;
+                    _currentIndex = 3;
                   });
                 },
               ),
@@ -181,7 +226,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
                         width: size.width * 0.06,
                         child: Icon(
                           Icons.settings,
-                          color: _currentIndex == 3
+                          color: _currentIndex == 4
                               ? Colors.cyan.withOpacity(0.7)
                               : Colors.white,
                         )),
@@ -199,9 +244,9 @@ class _NavigationScreenState extends State<NavigationScreen> {
                   ],
                 ),
                 onPressed: () {
-                  _pageController.jumpToPage(3);
+                  _pageController.jumpToPage(4);
                   setState(() {
-                    _currentIndex = 3;
+                    _currentIndex = 4;
                   });
                 },
               ),

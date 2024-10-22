@@ -2,8 +2,6 @@ import 'package:flelobna/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_storage/get_storage.dart';
-
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flelobna/screens/auth/signup_screen.dart';
 import 'package:flelobna/screens/navigation_screen.dart';
 import 'package:flelobna/widgets/line_bar.dart';
@@ -91,9 +89,11 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           child: Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: size.width * 0.1,
-              horizontal: size.width * 0.05,
+            padding: EdgeInsets.only(
+              top: 32,
+              bottom: 8,
+              left: 8,
+              right: 8,
             ),
             child: Container(
               decoration: BoxDecoration(
@@ -111,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       Container(
-                        width: size.width * 0.23,
+                        width: size.width * 0.4,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           gradient: LinearGradient(
@@ -121,6 +121,27 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         child: Image.asset('assets/images/logosbg.png'),
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Flelobna',
+                          style: TextStyle(
+                            color: AppColors.blue,
+                            fontSize: size.width * 0.07,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.bold,
+                            // shadows: <Shadow>[
+                            //   Shadow(
+                            //     offset: Offset(
+                            //         2.0, 2.0), // Define the shadow offset
+                            //     blurRadius: 3.0, // Define the blur radius
+                            //     color: AppColors.blue.withOpacity(
+                            //         0.5), // Define the shadow color
+                            //   ),
+                            // ],
+                          ),
+                        ),
                       ),
                       SizedBox(height: size.height * 0.06),
                       Container(
@@ -132,22 +153,30 @@ class _LoginPageState extends State<LoginPage> {
                             fontSize: size.width * 0.07,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.bold,
-                            shadows: <Shadow>[
-                              Shadow(
-                                offset: Offset(
-                                    2.0, 2.0), // Define the shadow offset
-                                blurRadius: 3.0, // Define the blur radius
-                                color: AppColors.blue.withOpacity(
-                                    0.5), // Define the shadow color
-                              ),
-                            ],
+                            // shadows: <Shadow>[
+                            //   Shadow(
+                            //     offset: Offset(
+                            //         2.0, 2.0), // Define the shadow offset
+                            //     blurRadius: 3.0, // Define the blur radius
+                            //     color: AppColors.blue.withOpacity(
+                            //         0.5), // Define the shadow color
+                            //   ),
+                            // ],
                           ),
                         ),
                       ),
                       SizedBox(height: size.height * 0.06),
                       TextFormField(
                         keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(labelText: 'Email'),
+                        decoration: InputDecoration(
+                          labelText: 'Email',
+                          fillColor: Colors.white54,
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide.none,
+                          ),
+                        ),
                         validator: (input) {
                           if (input!.isEmpty) {
                             return 'Please enter your email';
@@ -156,6 +185,7 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         onSaved: (input) => _email = input!,
                       ),
+                      SizedBox(height: size.height * 0.02),
                       TextFormField(
                         obscureText: _isObscured,
                         decoration: InputDecoration(
@@ -173,6 +203,12 @@ class _LoginPageState extends State<LoginPage> {
                               });
                             },
                           ),
+                          fillColor: Colors.white54,
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide.none,
+                          ),
                         ),
                         validator: (input) {
                           if (input!.isEmpty) {
@@ -184,26 +220,36 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       SizedBox(height: size.height * 0.05),
                       Container(
-                        width: size.width * 0.8,
+                        width: size.width * 0.9,
+                        height: size.height * 0.07,
                         child: ElevatedButton(
                           onPressed: _login,
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                            ),
+                          ),
                           child: Text(
                             'Login',
-                            style: TextStyle(color: AppColors.blue),
+                            style: TextStyle(
+                                color: AppColors.blue,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
                       SizedBox(height: size.height * 0.04),
                       Container(
-                          width: size.width * 0.8,
+                          width: size.width * 0.9,
                           alignment: Alignment.center,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('Vous n\'avez pas de compte ?',
                                   style: TextStyle(
                                       color: AppColors.blue,
-                                      fontSize: size.width * 0.03)),
+                                      fontSize: 12,fontWeight: FontWeight.w500)),
                               GestureDetector(
                                   onTap: () {
                                     Get.to(() => SignUpScreen(),
@@ -212,7 +258,7 @@ class _LoginPageState extends State<LoginPage> {
                                   child: Text(' Inscrivez-vous.',
                                       style: TextStyle(
                                           color: AppColors.blue,
-                                          fontSize: size.width * 0.03))),
+                                          fontSize: 12,fontWeight: FontWeight.w500))),
                             ],
                           )),
                       SizedBox(height: size.height * 0.01),

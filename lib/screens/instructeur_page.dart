@@ -111,7 +111,7 @@ class InstructeurPage extends StatelessWidget {
                           width: size.width * 0.85,
                           alignment: Alignment.center,
                           child: Text(
-                            "Noura Al ajmi ",
+                            "Noura Al ajmi",
                             style: TextStyle(
                               fontSize: size.width * 0.03,
                               letterSpacing: size.width * 0.003,

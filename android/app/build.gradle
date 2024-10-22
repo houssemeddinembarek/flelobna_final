@@ -31,8 +31,9 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace "com.alphadev.flelobna.flelobna"
     compileSdkVersion flutter.compileSdkVersion
-    ndkVersion flutter.ndkVersion
+    ndkVersion = "25.1.8937393"
     compileSdkVersion 33
+    compileSdk = 34
 
     signingConfigs {
         release {
