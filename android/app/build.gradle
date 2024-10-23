@@ -48,7 +48,6 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
-
         }
     }
 
@@ -67,8 +66,8 @@ android {
 
     defaultConfig {
         applicationId "com.alphadev.flelobna.flelobna"
-        minSdkVersion flutter.minSdkVersion
-        targetSdkVersion flutter.targetSdkVersion
+        minSdkVersion 21
+        targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
