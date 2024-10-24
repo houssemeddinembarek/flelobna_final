@@ -7,6 +7,7 @@ import 'package:flelobna/screens/navigation_screen.dart';
 import 'package:flelobna/widgets/line_bar.dart';
 import 'package:get/get.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:simple_animations/animation_builder/play_animation_builder.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -144,26 +145,34 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       SizedBox(height: size.height * 0.06),
-                      Container(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          'Bienvenue sur notre application',
-                          style: TextStyle(
-                            color: AppColors.blue,
-                            fontSize: size.width * 0.07,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.bold,
-                            // shadows: <Shadow>[
-                            //   Shadow(
-                            //     offset: Offset(
-                            //         2.0, 2.0), // Define the shadow offset
-                            //     blurRadius: 3.0, // Define the blur radius
-                            //     color: AppColors.blue.withOpacity(
-                            //         0.5), // Define the shadow color
-                            //   ),
-                            // ],
-                          ),
-                        ),
+
+                      PlayAnimationBuilder<Color?>(
+                          tween: ColorTween(begin: Colors.red, end: Colors.blue),
+                          duration: const Duration(seconds: 5),
+                          curve: Curves.easeInOut, // specify curve
+                          builder: (context, value, _) {
+                          return Container(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              'Bienvenue sur notre application',
+                              style: TextStyle(
+                                color: AppColors.blue,
+                                fontSize: size.width * 0.07,
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.bold,
+                                // shadows: <Shadow>[
+                                //   Shadow(
+                                //     offset: Offset(
+                                //         2.0, 2.0), // Define the shadow offset
+                                //     blurRadius: 3.0, // Define the blur radius
+                                //     color: AppColors.blue.withOpacity(
+                                //         0.5), // Define the shadow color
+                                //   ),
+                                // ],
+                              ),
+                            ),
+                          );
+                        }
                       ),
                       SizedBox(height: size.height * 0.06),
                       TextFormField(
@@ -249,7 +258,7 @@ class _LoginPageState extends State<LoginPage> {
                               Text('Vous n\'avez pas de compte ?',
                                   style: TextStyle(
                                       color: AppColors.blue,
-                                      fontSize: 12,fontWeight: FontWeight.w500)),
+                                      fontSize: 14,fontWeight: FontWeight.w500)),
                               GestureDetector(
                                   onTap: () {
                                     Get.to(() => SignUpScreen(),
@@ -258,7 +267,7 @@ class _LoginPageState extends State<LoginPage> {
                                   child: Text(' Inscrivez-vous.',
                                       style: TextStyle(
                                           color: AppColors.blue,
-                                          fontSize: 12,fontWeight: FontWeight.w500))),
+                                          fontSize: 14,fontWeight: FontWeight.w500))),
                             ],
                           )),
                       SizedBox(height: size.height * 0.01),
@@ -308,4 +317,5 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
 }

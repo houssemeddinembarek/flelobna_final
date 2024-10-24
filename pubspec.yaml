@@ -55,6 +55,7 @@ dependencies:
   dio: ^5.4.0
   awesome_dialog: ^3.2.0
   win32: ^5.2.0
+  simple_animations: ^5.0.2
 
 flutter_icons:
   android: true

@@ -1,4 +1,5 @@
 import 'package:flelobna/constants/app_colors.dart';
+import 'package:flelobna/controller/video_controller.dart';
 import 'package:flelobna/screens/documents/documents_screen.dart';
 import 'package:flelobna/screens/instructeur_page.dart';
 import 'package:flelobna/screens/course/list_courses.dart';
@@ -6,6 +7,7 @@ import 'package:flelobna/screens/settings/settings_screen.dart';
 import 'package:flelobna/screens/video_screen.dart';
 import 'package:flelobna/screens/video_screen12.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class NavigationScreen extends StatefulWidget {
   const NavigationScreen({super.key});
@@ -18,6 +20,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   int _currentIndex = 0;
 
   PageController _pageController = PageController(initialPage: 0);
+  VideoController videoController = Get.put(VideoController());
 
   final List<Widget> _pages = [
     ListCourses(),
