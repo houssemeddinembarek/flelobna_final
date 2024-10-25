@@ -26,7 +26,7 @@ class CourseController extends GetxController {
     super.onInit();
   }
 
-  void fetchCourses() async {
+  Future<void> fetchCourses() async {
     FirebaseFirestore.instance
         .collection('courses')
         .snapshots()
