@@ -107,8 +107,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(60)),
                   child: Container(
-                    width: size.width * 0.1,
-                    height: size.width * 0.1,
+                    width: size.width * 0.07,
+                    height: size.width * 0.07,
                     color: AppColors.blueTextColor,
                     child: GestureDetector(
                         onTap: () {
@@ -127,6 +127,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         child: Icon(
                           Icons.edit,
                           color: AppColors.whiteFlue,
+                          size: size.width * 0.05,
                         )),
                   )),
             ],

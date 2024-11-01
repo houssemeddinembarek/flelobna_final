@@ -25,7 +25,7 @@ void main() async {
   );
 
   // Firebase services
-  FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  // FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
   // Local Notifications Plugin
   // FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -50,10 +50,10 @@ void main() async {
   // await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
   // Setting up background message handler
-  FirebaseMessaging.onBackgroundMessage(backgroundMessageHandler);
+  // FirebaseMessaging.onBackgroundMessage(backgroundMessageHandler);
 
   // Subscribe to topic if necessary
-  await FirebaseMessaging.instance.subscribeToTopic('all');
+  // await FirebaseMessaging.instance.subscribeToTopic('all');
 
   // Initialize GetStorage or any other necessary services
   await GetStorage.init();

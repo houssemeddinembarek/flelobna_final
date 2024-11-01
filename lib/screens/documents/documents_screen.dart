@@ -16,7 +16,8 @@ class DocumentsScreen extends StatelessWidget {
         length: 3, // Number of tabs
         child: Scaffold(
           appBar: AppBar(
-            title: const Text('Liste des Videos'),
+            title:  Text('Liste des Videos'),
+            centerTitle: false,
             backgroundColor: AppColors.blueBgTop,
             titleTextStyle: TextStyle(
               fontSize: size.width * 0.05,

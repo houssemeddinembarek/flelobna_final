@@ -111,8 +111,33 @@ class _LoginPageState extends State<LoginPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
+                      SizedBox(
+                        width: size.width * 0.9,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            ClipRRect(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(60)),
+                                child: Container(
+                                  width: size.width * 0.1,
+                                  height: size.width * 0.1,
+                                  color: AppColors.blueTextColor,
+                                  child: GestureDetector(
+                                      onTap: () {
+                                        Get.offAll(() => NavigationScreen());
+                                      },
+                                      child: Icon(
+                                        Icons.home,
+                                        color: AppColors.whiteFlue,
+                                        size: size.width * 0.06,
+                                      )),
+                                )),
+                          ],
+                        ),
+                      ),
                       Container(
-                        width: size.width * 0.4,
+                        width: size.width * 0.3,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           gradient: LinearGradient(
@@ -129,51 +154,41 @@ class _LoginPageState extends State<LoginPage> {
                           'Flelobna',
                           style: TextStyle(
                             color: AppColors.blue,
-                            fontSize: size.width * 0.07,
+                            fontSize: size.width * 0.05,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.bold,
-                            // shadows: <Shadow>[
-                            //   Shadow(
-                            //     offset: Offset(
-                            //         2.0, 2.0), // Define the shadow offset
-                            //     blurRadius: 3.0, // Define the blur radius
-                            //     color: AppColors.blue.withOpacity(
-                            //         0.5), // Define the shadow color
-                            //   ),
-                            // ],
                           ),
                         ),
                       ),
-                      SizedBox(height: size.height * 0.06),
-
+                      SizedBox(height: size.height * 0.04),
                       PlayAnimationBuilder<Color?>(
-                          tween: ColorTween(begin: Colors.red, end: Colors.blue),
+                          tween:
+                              ColorTween(begin: Colors.red, end: Colors.blue),
                           duration: const Duration(seconds: 5),
                           curve: Curves.easeInOut, // specify curve
                           builder: (context, value, _) {
-                          return Container(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              'Bienvenue sur notre application',
-                              style: TextStyle(
-                                color: AppColors.blue,
-                                fontSize: size.width * 0.07,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.bold,
-                                // shadows: <Shadow>[
-                                //   Shadow(
-                                //     offset: Offset(
-                                //         2.0, 2.0), // Define the shadow offset
-                                //     blurRadius: 3.0, // Define the blur radius
-                                //     color: AppColors.blue.withOpacity(
-                                //         0.5), // Define the shadow color
-                                //   ),
-                                // ],
+                            return Container(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                'Bienvenue sur notre application',
+                                style: TextStyle(
+                                  color: AppColors.blue,
+                                  fontSize: size.width * 0.06,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.bold,
+                                  // shadows: <Shadow>[
+                                  //   Shadow(
+                                  //     offset: Offset(
+                                  //         2.0, 2.0), // Define the shadow offset
+                                  //     blurRadius: 3.0, // Define the blur radius
+                                  //     color: AppColors.blue.withOpacity(
+                                  //         0.5), // Define the shadow color
+                                  //   ),
+                                  // ],
+                                ),
                               ),
-                            ),
-                          );
-                        }
-                      ),
+                            );
+                          }),
                       SizedBox(height: size.height * 0.06),
                       TextFormField(
                         keyboardType: TextInputType.emailAddress,
@@ -227,10 +242,12 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         onSaved: (input) => _password = input!,
                       ),
-                      SizedBox(height: size.height * 0.05),
+                      isIOS()
+                          ? SizedBox(height: size.height * 0.04)
+                          : SizedBox(height: size.height * 0.08),
                       Container(
                         width: size.width * 0.9,
-                        height: size.height * 0.07,
+                        height: size.height * 0.06,
                         child: ElevatedButton(
                           onPressed: _login,
                           style: ElevatedButton.styleFrom(
@@ -242,13 +259,14 @@ class _LoginPageState extends State<LoginPage> {
                           child: Text(
                             'Login',
                             style: TextStyle(
-                                color: AppColors.blue,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
+                              color: AppColors.blue,
+                              fontSize: size.width * 0.05,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                       ),
-                      SizedBox(height: size.height * 0.04),
+                      SizedBox(height: size.height * 0.02),
                       Container(
                           width: size.width * 0.9,
                           alignment: Alignment.center,
@@ -258,7 +276,8 @@ class _LoginPageState extends State<LoginPage> {
                               Text('Vous n\'avez pas de compte ?',
                                   style: TextStyle(
                                       color: AppColors.blue,
-                                      fontSize: 14,fontWeight: FontWeight.w500)),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500)),
                               GestureDetector(
                                   onTap: () {
                                     Get.to(() => SignUpScreen(),
@@ -267,10 +286,11 @@ class _LoginPageState extends State<LoginPage> {
                                   child: Text(' Inscrivez-vous.',
                                       style: TextStyle(
                                           color: AppColors.blue,
-                                          fontSize: 14,fontWeight: FontWeight.w500))),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500))),
                             ],
                           )),
-                      SizedBox(height: size.height * 0.01),
+                      SizedBox(height: size.height * 0.02),
                       isIOS()
                           ? Column(
                               children: [
@@ -299,11 +319,12 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: size.height * 0.01),
+                                SizedBox(height: size.height * 0.02),
                                 // Add the "Sign In with Apple ID" button here:
                                 SignInWithAppleButton(
+                                  height: size.height * 0.06,
                                   onPressed: _signInWithApple,
-                                )
+                                ),
                               ],
                             )
                           : Container()
@@ -317,5 +338,4 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
 }

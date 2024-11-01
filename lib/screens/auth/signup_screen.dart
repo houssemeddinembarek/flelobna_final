@@ -87,7 +87,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Container(
-                  width: size.width * 0.4,
+                  width: size.width * 0.3,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: LinearGradient(
@@ -104,20 +104,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     'Flelobna',
                     style: TextStyle(
                       color: AppColors.blue,
-                      fontSize: size.width * 0.07,
+                      fontSize: size.width * 0.05,
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                SizedBox(height: size.height * 0.02),
+                SizedBox(height: size.height * 0.04),
                 Container(
                   alignment: Alignment.topLeft,
                   child: Text(
                     'Bienvenue',
                     style: TextStyle(
                       color: AppColors.blue,
-                      fontSize: size.width * 0.07,
+                      fontSize: size.width * 0.06,
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.bold,
                       // shadows: <Shadow>[
@@ -133,7 +133,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: size.height * 0.02),
+                SizedBox(height: size.height * 0.04),
                 TextFormField(
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
@@ -224,10 +224,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                   onSaved: (input) => _password = input!,
                 ),
-                SizedBox(height: size.height * 0.05),
+                SizedBox(height: size.height * 0.06),
                 Container(
                   width: size.width * 0.9,
-                  height: size.height * 0.07,
+                  height: size.height * 0.06,
                   child: ElevatedButton(
                     onPressed: _register,
                     style: ElevatedButton.styleFrom(
@@ -239,11 +239,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       'Inscription',
                       style: TextStyle(
                         color: AppColors.blue,
+                        fontSize: size.width*0.05,
+                        fontWeight: FontWeight.w500
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: size.height * 0.02),
+                SizedBox(height: size.height * 0.04),
                 Container(
                     width: size.width * 0.9,
                     alignment: Alignment.center,

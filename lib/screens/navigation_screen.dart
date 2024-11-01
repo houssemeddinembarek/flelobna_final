@@ -8,6 +8,7 @@ import 'package:flelobna/screens/video_screen.dart';
 import 'package:flelobna/screens/video_screen12.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class NavigationScreen extends StatefulWidget {
   const NavigationScreen({super.key});
@@ -18,6 +19,7 @@ class NavigationScreen extends StatefulWidget {
 
 class _NavigationScreenState extends State<NavigationScreen> {
   int _currentIndex = 0;
+  final box = GetStorage();
 
   PageController _pageController = PageController(initialPage: 0);
   VideoController videoController = Get.put(VideoController());
@@ -32,6 +34,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
     ),
     DocumentsScreen(),
     // InstructeurPage(),
+
     SettingsScreen()
   ];
 
@@ -50,46 +53,40 @@ class _NavigationScreenState extends State<NavigationScreen> {
         },
       ),
       bottomNavigationBar: BottomAppBar(
+        height: size.height * 0.09,
         elevation: 0,
         color: AppColors.blueBgTop.withOpacity(0.5),
-        child: Container(
-          height: 60,
-          decoration: BoxDecoration(
-              // borderRadius: BorderRadius.all(Radius.circular(25))
-              ),
-          // padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              IconButton(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: IconButton(
+                padding: EdgeInsets.all(5),
                 icon: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Container(
-                        height: size.width * 0.06,
-                        width: size.width * 0.06,
-                        child: ClipOval(
-                          child: Image.asset(
-                            'assets/icons/instructor.png',
-                            width: size.width * 0.12,
-                            height: size.width * 0.12,
-                            fit: BoxFit.cover,
-                            color: _currentIndex == 0
-                                ? Colors.cyan.withOpacity(0.7)
-                                : Colors.white,
-                          ),
-                        )),
                     SizedBox(
-                      height: size.height * 0.005,
+                      height: size.width * 0.06,
+                      width: size.width * 0.06,
+                      child: ClipOval(
+                        child: Image.asset(
+                          'assets/icons/instructor.png',
+                          fit: BoxFit.cover,
+                          color: _currentIndex == 0
+                              ? Colors.cyan.withOpacity(0.7)
+                              : Colors.white,
+                        ),
+                      ),
                     ),
                     Text(
                       'Revues',
                       style: TextStyle(
-                        fontSize: 8,
+                        fontSize: size.width * 0.02,
                         fontWeight: FontWeight.bold,
                         color: AppColors.blueTextColor,
                       ),
-                    )
+                    ),
                   ],
                 ),
                 color: _currentIndex == 0 ? Colors.yellow : Colors.white,
@@ -100,119 +97,36 @@ class _NavigationScreenState extends State<NavigationScreen> {
                   });
                 },
               ),
-              // IconButton(
-              //   icon: Column(
-              //     children: [
-              //       Container(
-              //         height: size.width * 0.06,
-              //         width: size.width * 0.06,
-              //         child: ClipOval(
-              //           child: Image.asset(
-              //             'assets/icons/video.png',
-              //             width: size.width * 0.12,
-              //             height: size.width * 0.12,
-              //             fit: BoxFit.cover,
-              //             color: _currentIndex == 1
-              //                 ? Colors.cyan.withOpacity(0.7)
-              //                 : Colors.white,
-              //           ),
-              //         ),
-              //       ),
-              //       SizedBox(
-              //         height: size.height * 0.005,
-              //       ),
-              //       Text(
-              //         '11 éme',
-              //         style: TextStyle(
-              //           fontSize: 8,
-              //           fontWeight: FontWeight.bold,
-              //           color: AppColors.blueTextColor,
-              //         ),
-              //       )
-              //     ],
-              //   ),
-              //   color: _currentIndex == 1 ? Colors.yellow : Colors.white,
-              //   onPressed: () {
-              //     _pageController.jumpToPage(1);
-              //     setState(() {
-              //       _currentIndex = 1;
-              //     });
-              //   },
-              // ),
-              // IconButton(
-              //   icon: Container(
-              //       height: size.height * 0.06,
-              //       child: Column(
-              //         children: [
-              //           Container(
-              //             height: size.width * 0.06,
-              //             width: size.width * 0.06,
-              //             child: ClipOval(
-              //               child: Image.asset(
-              //                 'assets/icons/video.png',
-              //                 height: size.width * 0.06,
-              //                 width: size.width * 0.06,
-              //                 fit: BoxFit.cover,
-              //                 color: _currentIndex == 2
-              //                     ? Colors.cyan.withOpacity(0.7)
-              //                     : Colors.white,
-              //               ),
-              //             ),
-              //           ),
-              //           SizedBox(
-              //             height: size.height * 0.005,
-              //           ),
-              //           Text(
-              //             '12 éme',
-              //             style: TextStyle(
-              //               fontSize: 8,
-              //               fontWeight: FontWeight.bold,
-              //               color: AppColors.blueTextColor,
-              //             ),
-              //           )
-              //         ],
-              //       )),
-              //   color: _currentIndex == 2 ? Colors.yellow : Colors.white,
-              //   onPressed: () {
-              //     _pageController.jumpToPage(2);
-              //     setState(() {
-              //       _currentIndex = 2;
-              //     });
-              //   },
-              // ),
-              IconButton(
-                icon: Container(
-                    height: size.height * 0.06,
-                    child: Column(
-                      children: [
-                        Container(
-                          height: size.width * 0.06,
-                          width: size.width * 0.06,
-                          child: ClipOval(
-                            child: Image.asset(
-                              'assets/icons/video.png',
-                              height: size.width * 0.06,
-                              width: size.width * 0.06,
-                              fit: BoxFit.cover,
-                              color: _currentIndex == 3
-                                  ? Colors.cyan.withOpacity(0.7)
-                                  : Colors.white,
-                            ),
-                          ),
+            ),
+            Expanded(
+              child: IconButton(
+                padding: EdgeInsets.all(5),
+                icon: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      height: size.width * 0.06,
+                      width: size.width * 0.06,
+                      child: ClipOval(
+                        child: Image.asset(
+                          'assets/icons/video.png',
+                          fit: BoxFit.cover,
+                          color: _currentIndex == 3
+                              ? Colors.cyan.withOpacity(0.7)
+                              : Colors.white,
                         ),
-                        SizedBox(
-                          height: size.height * 0.005,
-                        ),
-                        Text(
-                          'Videos',
-                          style: TextStyle(
-                            fontSize: 8,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.blueTextColor,
-                          ),
-                        )
-                      ],
-                    )),
+                      ),
+                    ),
+                    Text(
+                      'Videos',
+                      style: TextStyle(
+                        fontSize: size.width * 0.02,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.blueTextColor,
+                      ),
+                    ),
+                  ],
+                ),
                 color: _currentIndex == 3 ? Colors.yellow : Colors.white,
                 onPressed: () {
                   _pageController.jumpToPage(3);
@@ -221,40 +135,44 @@ class _NavigationScreenState extends State<NavigationScreen> {
                   });
                 },
               ),
-              IconButton(
-                icon: Column(
-                  children: [
-                    Container(
+            ),
+            if (box.read("email") != null && box.read("email") != "")
+              Expanded(
+                child: IconButton(
+                  padding: EdgeInsets.all(5),
+                  icon: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
                         height: size.width * 0.06,
                         width: size.width * 0.06,
                         child: Icon(
                           Icons.settings,
+                          size: size.width * 0.041,
                           color: _currentIndex == 4
                               ? Colors.cyan.withOpacity(0.7)
                               : Colors.white,
-                        )),
-                    SizedBox(
-                      height: size.height * 0.005,
-                    ),
-                    Text(
-                      'Settings',
-                      style: TextStyle(
-                        fontSize: 8,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.blueTextColor,
+                        ),
                       ),
-                    )
-                  ],
+                      Text(
+                        'Paramètre',
+                        style: TextStyle(
+                          fontSize: size.width * 0.02,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.blueTextColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  onPressed: () {
+                    _pageController.jumpToPage(4);
+                    setState(() {
+                      _currentIndex = 4;
+                    });
+                  },
                 ),
-                onPressed: () {
-                  _pageController.jumpToPage(4);
-                  setState(() {
-                    _currentIndex = 4;
-                  });
-                },
               ),
-            ],
-          ),
+          ],
         ),
       ),
     );
