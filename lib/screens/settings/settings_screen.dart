@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flelobna/constants/app_colors.dart';
 import 'package:flelobna/controller/auth_controller.dart';
 import 'package:flelobna/screens/auth/login_screen.dart';
+import 'package:flelobna/screens/navigation_screen.dart';
 import 'package:flelobna/screens/objectif/introduction_arabe_screen.dart';
 import 'package:flelobna/screens/settings/home-screen.dart';
 import 'package:flelobna/screens/instructeur_page.dart';
@@ -22,27 +23,25 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   AuthController authController = Get.put(AuthController());
-  GetStorage getStorage = GetStorage();
+  GetStorage box = GetStorage();
 
   @override
   void initState() {
-    print(getStorage.read('email'));
-    authController.getUserByEmail(getStorage.read('email'));
+    if (box.read("email") != null && box.read("email") != "")
+      authController.getUserByEmail(box.read('email'));
+    // print(box.read('email'));
     super.initState();
   }
 
   void deleteEmail() {
-    final storage = GetStorage();
-    storage.remove('email');
+    box.remove('email');
   }
 
   Future<void> signOut() async {
-    final storage = GetStorage();
-
     // Remove user data from GetStorage
-    storage.remove('email');
-    storage.remove('familyName');
-    storage.remove('givenName');
+    box.remove('email');
+    box.remove('familyName');
+    box.remove('givenName');
 
     Get.offAll(LoginPage());
   }
@@ -104,32 +103,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   color: AppColors.blueTextColor,
                 ),
               ),
-              ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(60)),
-                  child: Container(
-                    width: size.width * 0.07,
-                    height: size.width * 0.07,
-                    color: AppColors.blueTextColor,
-                    child: GestureDetector(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return EditNameDialog(
-                                initialFirstName:
-                                    authController.userDetail.value.firstName,
-                                initialLastName:
-                                    authController.userDetail.value.lastName,
-                              );
-                            },
-                          );
-                        },
-                        child: Icon(
-                          Icons.edit,
-                          color: AppColors.whiteFlue,
-                          size: size.width * 0.05,
-                        )),
-                  )),
+              if (box.read("email") != null && box.read("email") != "")
+                ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(60)),
+                    child: Container(
+                      width: size.width * 0.07,
+                      height: size.width * 0.07,
+                      color: AppColors.blueTextColor,
+                      child: GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return EditNameDialog(
+                                  initialFirstName:
+                                      authController.userDetail.value.firstName,
+                                  initialLastName:
+                                      authController.userDetail.value.lastName,
+                                );
+                              },
+                            );
+                          },
+                          child: Icon(
+                            Icons.edit,
+                            color: AppColors.whiteFlue,
+                            size: size.width * 0.05,
+                          )),
+                    )),
             ],
           ),
         ),
@@ -158,127 +158,168 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Container(
-                            width: size.width * 0.9,
-                            height: size.height * 0.22,
-                            decoration: BoxDecoration(
-                              color: Colors.white54.withOpacity(0.3),
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.cyan.withOpacity(0.3),
-                                  offset: Offset(0, 2),
-                                  blurRadius: 4,
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  height: size.height * 0.01,
-                                ),
-                                Container(
-                                  width: size.width * 0.7,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
+                          (box.read("email") != null && box.read("email") != "")
+                              ? Container(
+                                  width: size.width * 0.9,
+                                  height: size.height * 0.22,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white54.withOpacity(0.3),
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.cyan.withOpacity(0.3),
+                                        offset: Offset(0, 2),
+                                        blurRadius: 4,
+                                      ),
+                                    ],
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      Text('Email: ',
-                                          style: TextStyle(
-                                            fontSize: size.width * 0.04,
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColors.GreeFonce,
-                                          )),
-                                      Text(
-                                          authController.userDetail.value.email
-                                              .toString(),
-                                          style: TextStyle(
-                                            fontSize: size.width * 0.04,
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColors.GreeFonce,
-                                          )),
+                                      SizedBox(
+                                        height: size.height * 0.01,
+                                      ),
+                                      (box.read("email") != null &&
+                                              box.read("email") != "")
+                                          ? Container(
+                                              width: size.width * 0.7,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Text('Email: ',
+                                                      style: TextStyle(
+                                                        fontSize:
+                                                            size.width * 0.04,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color:
+                                                            AppColors.GreeFonce,
+                                                      )),
+                                                  Text(
+                                                      authController.userDetail
+                                                          .value.email
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                        fontSize:
+                                                            size.width * 0.04,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color:
+                                                            AppColors.GreeFonce,
+                                                      )),
+                                                ],
+                                              ),
+                                            )
+                                          : SizedBox(),
+                                      (box.read("email") != null &&
+                                              box.read("email") != "")
+                                          ? Container(
+                                              width: size.width * 0.7,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Text('Prenom: ',
+                                                      style: TextStyle(
+                                                        fontSize:
+                                                            size.width * 0.04,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color:
+                                                            AppColors.GreeFonce,
+                                                      )),
+                                                  Text(
+                                                      authController.userDetail
+                                                          .value.firstName
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                        fontSize:
+                                                            size.width * 0.04,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color:
+                                                            AppColors.GreeFonce,
+                                                      )),
+                                                ],
+                                              ),
+                                            )
+                                          : SizedBox(),
+                                      Container(
+                                        width: size.width * 0.7,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text('Nom: ',
+                                                style: TextStyle(
+                                                  fontSize: size.width * 0.04,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: AppColors.GreeFonce,
+                                                )),
+                                            Text(
+                                                authController
+                                                    .userDetail.value.lastName
+                                                    .toString(),
+                                                style: TextStyle(
+                                                  fontSize: size.width * 0.04,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: AppColors.GreeFonce,
+                                                )),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: size.height * 0.02,
+                                      ),
                                     ],
                                   ),
-                                ),
-                                Container(
-                                  width: size.width * 0.7,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text('Prenom: ',
-                                          style: TextStyle(
-                                            fontSize: size.width * 0.04,
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColors.GreeFonce,
-                                          )),
-                                      Text(
-                                          authController
-                                              .userDetail.value.firstName
-                                              .toString(),
-                                          style: TextStyle(
-                                            fontSize: size.width * 0.04,
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColors.GreeFonce,
-                                          )),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  width: size.width * 0.7,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text('Nom: ',
-                                          style: TextStyle(
-                                            fontSize: size.width * 0.04,
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColors.GreeFonce,
-                                          )),
-                                      Text(
-                                          authController
-                                              .userDetail.value.lastName
-                                              .toString(),
-                                          style: TextStyle(
-                                            fontSize: size.width * 0.04,
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColors.GreeFonce,
-                                          )),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: size.height * 0.02,
-                                ),
-                              ],
-                            ),
-                          ),
+                                )
+                              : SizedBox(),
                           SizedBox(
                             height: size.height * 0.04,
                           ),
-                          SettingsButton(
-                            text: 'Se Deconnecter',
-                            textColor: AppColors.blueTextColor,
-                            icon: Icons.logout,
-                            iconColor: AppColors.blueTextColor,
-                            onTap: () async {
-                              if (GetStorage().read('familyName') != null &&
-                                  GetStorage().read('givenName') != null) {
-                                signOut();
-                              } else {
-                                await FirebaseAuth.instance.signOut();
-                                deleteEmail();
-                                Get.offAll(LoginPage(),
-                                    transition: Transition.rightToLeft);
-                              }
-                            },
-                          ),
+                          (box.read("email") != null && box.read("email") != "")
+                              ? SettingsButton(
+                                  text: 'Se Deconnecter',
+                                  textColor: AppColors.blueTextColor,
+                                  icon: Icons.logout,
+                                  iconColor: AppColors.blueTextColor,
+                                  onTap: () async {
+                                    if (box.read('familyName') != null &&
+                                        box.read('givenName') != null) {
+                                      signOut();
+                                    } else {
+                                      await FirebaseAuth.instance.signOut();
+                                      deleteEmail();
+                                      Get.offAll(LoginPage(),
+                                          transition: Transition.rightToLeft);
+                                    }
+                                  },
+                                )
+                              : SettingsButton(
+                                  text: 'Se Connecter',
+                                  textColor: AppColors.blueTextColor,
+                                  icon: Icons.login,
+                                  iconColor: AppColors.blueTextColor,
+                                  onTap: () async {
+                                    if (box.read('familyName') != null &&
+                                        box.read('givenName') != null) {
+                                      Get.to(()=>NavigationScreen());
+                                    } else {
+                                      Get.to(()=>LoginPage());
+                                    }
+                                  },
+                                ),
                           SizedBox(
                             height: size.height * 0.01,
                           ),
@@ -334,22 +375,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           SizedBox(
                             height: size.height * 0.01,
                           ),
-                          SettingsButton(
-                            text: 'Supprimer votre compte',
-                            textColor: Colors.red,
-                            icon: Icons.delete_forever,
-                            iconColor: Colors.red,
-                            onTap: () {
-                              if (GetStorage().read('familyName') != null &&
-                                  GetStorage().read('givenName') != null) {
-                                signOut();
-                              } else {
-                                deleteUserAccount(context);
-                                Get.offAll(LoginPage(),
-                                    transition: Transition.rightToLeft);
-                              }
-                            },
-                          ),
+                          (box.read("email") != null && box.read("email") != "")
+                              ? SettingsButton(
+                                  text: 'Supprimer votre compte',
+                                  textColor: Colors.red,
+                                  icon: Icons.delete_forever,
+                                  iconColor: Colors.red,
+                                  onTap: () {
+                                    if (box.read('familyName') != null &&
+                                        box.read('givenName') != null) {
+                                      signOut();
+                                    } else {
+                                      deleteUserAccount(context);
+                                      Get.offAll(LoginPage(),
+                                          transition: Transition.rightToLeft);
+                                    }
+                                  },
+                                )
+                              : SizedBox(),
                         ],
                       ),
                     ),

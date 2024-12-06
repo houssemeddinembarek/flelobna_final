@@ -32,7 +32,7 @@ class DocumentsSection extends StatelessWidget {
             for (String videoAsset in videoAssets)
               ExpansionTile(
                 // backgroundColor: AppColors.whiteFlue,
-                initiallyExpanded: true,
+                initiallyExpanded: false,
                 title: Text(
                   title.toString(),
                   style: TextStyle(

@@ -9,6 +9,10 @@ class DocumentsScreen extends StatelessWidget {
 
   VideoController videoController = Get.put(VideoController());
 
+  Future<void> _onRefresh() async {
+    await videoController.fetchVideosByCategories();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -16,7 +20,7 @@ class DocumentsScreen extends StatelessWidget {
         length: 3, // Number of tabs
         child: Scaffold(
           appBar: AppBar(
-            title:  Text('Liste des Videos'),
+            title: Text('Liste des Videos'),
             centerTitle: false,
             backgroundColor: AppColors.blueBgTop,
             titleTextStyle: TextStyle(
@@ -48,82 +52,102 @@ class DocumentsScreen extends StatelessWidget {
                     height: size.height,
                     width: size.width,
                     decoration: BoxDecoration(
+
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [AppColors.blueBgTop, AppColors.blueBgBottom],
                       ),
                     ),
-                    child: TabBarView(
+                    child:TabBarView(
                       children: [
-                        SizedBox(
-                          height: size.height,
-                          width: size.width,
-                          child: ListView.builder(
-                            itemCount: videoController.videosCategory11.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return DocumentsSection(
-                                title: videoController
-                                    .videosCategory11.value[index].title,
-                                description: videoController
-                                    .videosCategory11.value[index].description,
-                                name: videoController
-                                    .videosCategory11.value[index].name,
-                                direction: videoController
-                                    .videosCategory11.value[index].direction,
-                                inspectrice: videoController
-                                    .videosCategory11.value[index].inspectrice,
-                                videoAssets: [
-                                  videoController
-                                      .videosCategory11.value[index].videoPath,
-                                ],
-                              );
-                            },
+                        RefreshIndicator(
+                          onRefresh: _onRefresh,
+                          child: SizedBox(
+                            height: size.height,
+                            width: size.width,
+                            child: ListView.builder(
+                              itemCount:
+                              videoController.videosCategory11.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return DocumentsSection(
+                                  title: videoController
+                                      .videosCategory11.value[index].title,
+                                  description: videoController
+                                      .videosCategory11
+                                      .value[index]
+                                      .description,
+                                  name: videoController
+                                      .videosCategory11.value[index].name,
+                                  direction: videoController.videosCategory11
+                                      .value[index].direction,
+                                  inspectrice: videoController
+                                      .videosCategory11
+                                      .value[index]
+                                      .inspectrice,
+                                  videoAssets: [
+                                    videoController.videosCategory11
+                                        .value[index].videoPath,
+                                  ],
+                                );
+                              },
+                            ),
                           ),
                         ),
-                        SizedBox(
-                          height: size.height,
-                          width: size.width,
-                          child: ListView.builder(
-                            itemCount: videoController.videosCategory12.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return DocumentsSection(
-                                title: videoController
-                                    .videosCategory12.value[index].title,
-                                description: videoController
-                                    .videosCategory12.value[index].description,
-                                name: videoController
-                                    .videosCategory12.value[index].name,
-                                direction: videoController
-                                    .videosCategory12.value[index].direction,
-                                inspectrice: videoController
-                                    .videosCategory12.value[index].inspectrice,
-                                videoAssets: [
-                                  videoController
-                                      .videosCategory12.value[index].videoPath,
-                                ],
-                              );
-                            },
+                        RefreshIndicator(
+                          onRefresh: _onRefresh,
+                          child: SizedBox(
+                            height: size.height,
+                            width: size.width,
+                            child: ListView.builder(
+                              itemCount:
+                              videoController.videosCategory12.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return DocumentsSection(
+                                  title: videoController
+                                      .videosCategory12.value[index].title,
+                                  description: videoController
+                                      .videosCategory12
+                                      .value[index]
+                                      .description,
+                                  name: videoController
+                                      .videosCategory12.value[index].name,
+                                  direction: videoController.videosCategory12
+                                      .value[index].direction,
+                                  inspectrice: videoController
+                                      .videosCategory12
+                                      .value[index]
+                                      .inspectrice,
+                                  videoAssets: [
+                                    videoController.videosCategory12
+                                        .value[index].videoPath,
+                                  ],
+                                );
+                              },
+                            ),
                           ),
                         ),
-                        SizedBox(
-                          height: size.height,
-                          width: size.width,
-                          child: ListView.builder(
-                            itemCount: videoController.videosCategoryFle.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return DocumentsSection(
-                                title: videoController
-                                    .videosCategoryFle.value[index].title,
-                                videoAssets: [
-                                  videoController
-                                      .videosCategoryFle.value[index].videoPath,
-                                ],
-                              );
-                            },
+                        RefreshIndicator(
+                          onRefresh: _onRefresh,
+                          child: SizedBox(
+                            height: size.height,
+                            width: size.width,
+                            child: ListView.builder(
+                              itemCount:
+                              videoController.videosCategoryFle.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return DocumentsSection(
+                                  title: videoController
+                                      .videosCategoryFle.value[index].title,
+                                  videoAssets: [
+                                    videoController.videosCategoryFle
+                                        .value[index].videoPath,
+                                  ],
+                                );
+                              },
+                            ),
                           ),
                         )
-
                       ],
                     ),
                   )

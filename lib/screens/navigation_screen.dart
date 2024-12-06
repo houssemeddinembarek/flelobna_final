@@ -62,13 +62,13 @@ class _NavigationScreenState extends State<NavigationScreen> {
           children: <Widget>[
             Expanded(
               child: IconButton(
-                padding: EdgeInsets.all(5),
+                // padding: EdgeInsets.all(5),
                 icon: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox(
-                      height: size.width * 0.06,
-                      width: size.width * 0.06,
+                      height: size.width * 0.05,
+                      width: size.width * 0.05,
                       child: ClipOval(
                         child: Image.asset(
                           'assets/icons/instructor.png',
@@ -100,13 +100,13 @@ class _NavigationScreenState extends State<NavigationScreen> {
             ),
             Expanded(
               child: IconButton(
-                padding: EdgeInsets.all(5),
+                // padding: EdgeInsets.all(5),
                 icon: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox(
-                      height: size.width * 0.06,
-                      width: size.width * 0.06,
+                      height: size.width * 0.05,
+                      width: size.width * 0.05,
                       child: ClipOval(
                         child: Image.asset(
                           'assets/icons/video.png',
@@ -136,42 +136,41 @@ class _NavigationScreenState extends State<NavigationScreen> {
                 },
               ),
             ),
-            if (box.read("email") != null && box.read("email") != "")
-              Expanded(
-                child: IconButton(
-                  padding: EdgeInsets.all(5),
-                  icon: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        height: size.width * 0.06,
-                        width: size.width * 0.06,
-                        child: Icon(
-                          Icons.settings,
-                          size: size.width * 0.041,
-                          color: _currentIndex == 4
-                              ? Colors.cyan.withOpacity(0.7)
-                              : Colors.white,
-                        ),
+            Expanded(
+              child: IconButton(
+                // padding: EdgeInsets.all(5),
+                icon: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      height: size.width * 0.05,
+                      width: size.width * 0.05,
+                      child: Icon(
+                        Icons.settings,
+                        size: size.width * 0.041,
+                        color: _currentIndex == 4
+                            ? Colors.cyan.withOpacity(0.7)
+                            : Colors.white,
                       ),
-                      Text(
-                        'Paramètre',
-                        style: TextStyle(
-                          fontSize: size.width * 0.02,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.blueTextColor,
-                        ),
+                    ),
+                    Text(
+                      'Paramètre',
+                      style: TextStyle(
+                        fontSize: size.width * 0.02,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.blueTextColor,
                       ),
-                    ],
-                  ),
-                  onPressed: () {
-                    _pageController.jumpToPage(4);
-                    setState(() {
-                      _currentIndex = 4;
-                    });
-                  },
+                    ),
+                  ],
                 ),
+                onPressed: () {
+                  _pageController.jumpToPage(4);
+                  setState(() {
+                    _currentIndex = 4;
+                  });
+                },
               ),
+            ),
           ],
         ),
       ),

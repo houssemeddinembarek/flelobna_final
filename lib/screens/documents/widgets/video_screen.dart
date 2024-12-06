@@ -27,6 +27,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       videoPlayerController: _videoPlayerController,
       aspectRatio: 16 / 9,
       autoPlay: false,
+      // autoInitialize: true,
       looping: true,
     );
   }
