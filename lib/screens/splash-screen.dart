@@ -1,7 +1,7 @@
 import 'package:flelobna/constants/app_colors.dart';
 import 'package:flelobna/screens/auth/login_screen.dart';
-import 'package:flelobna/screens/settings/home-screen.dart';
 import 'package:flelobna/screens/navigation_screen.dart';
+import 'package:flelobna/services/app_update_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,14 +15,25 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final AppUpdateService _updateService = AppUpdateService();
+
+  @override
   void initState() {
-    _navigateToHome();
     super.initState();
+    _navigateToHome();
   }
 
   _navigateToHome() async {
-    await Future.delayed(Duration(milliseconds: 4000), () {});
-    // Get.offAll(HomeScreen());
+    // Wait for splash animation
+    await Future.delayed(Duration(milliseconds: 3000), () {});
+    
+    // Check for app updates
+    if (mounted) {
+      await _updateService.checkForUpdate(context);
+    }
+    
+    // Navigate based on login status
+    await Future.delayed(Duration(milliseconds: 500), () {});
     if (GetStorage().read('email') != null) {
       Get.offAll(NavigationScreen());
     } else {
@@ -42,7 +53,6 @@ class _SplashScreenState extends State<SplashScreen> {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                // colors: [Colors.cyan, Colors.blueGrey],
                 colors: [AppColors.blueBgTop, AppColors.blueBgBottom],
               ),
             ),
@@ -51,15 +61,44 @@ class _SplashScreenState extends State<SplashScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  height: size.width * 0.35,
-                  width: size.width * 0.35,
+                  height: size.width * 0.4,
+                  width: size.width * 0.4,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.white.withOpacity(0.3),
+                        blurRadius: 30,
+                        spreadRadius: 10,
+                      ),
+                    ],
                   ),
                   child: Image.asset(
                     'assets/images/logosFL.png',
                     fit: BoxFit.cover,
                   ),
+                ),
+                SizedBox(height: size.height * 0.05),
+                Text(
+                  'FleLobna',
+                  style: TextStyle(
+                    fontSize: size.width * 0.08,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    letterSpacing: 2,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black.withOpacity(0.3),
+                        blurRadius: 10,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: size.height * 0.02),
+                CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  strokeWidth: 3,
                 ),
                 // SizedBox(
                 //   height: size.height * 0.02,
