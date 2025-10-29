@@ -1,14 +1,11 @@
 import 'package:flelobna/constants/app_colors.dart';
-import 'package:flelobna/controller/video_controller.dart';
 import 'package:flelobna/screens/documents/documents_screen.dart';
-import 'package:flelobna/screens/instructeur_page.dart';
 import 'package:flelobna/screens/course/list_courses.dart';
 import 'package:flelobna/screens/settings/settings_screen.dart';
 import 'package:flelobna/screens/video_screen.dart';
 import 'package:flelobna/screens/video_screen12.dart';
+import 'package:flelobna/screens/ai_chat/ai_chat_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class NavigationScreen extends StatefulWidget {
   const NavigationScreen({super.key});
@@ -19,10 +16,7 @@ class NavigationScreen extends StatefulWidget {
 
 class _NavigationScreenState extends State<NavigationScreen> {
   int _currentIndex = 0;
-  final box = GetStorage();
-
-  PageController _pageController = PageController(initialPage: 0);
-  VideoController videoController = Get.put(VideoController());
+  late PageController _pageController;
 
   final List<Widget> _pages = [
     ListCourses(),
@@ -33,10 +27,21 @@ class _NavigationScreenState extends State<NavigationScreen> {
       videoAssets: ['assets/video/video12.mp4'],
     ),
     DocumentsScreen(),
-    // InstructeurPage(),
-
+    AiChatScreen(),
     SettingsScreen()
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: 0);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,126 +57,173 @@ class _NavigationScreenState extends State<NavigationScreen> {
           });
         },
       ),
-      bottomNavigationBar: BottomAppBar(
-        height: size.height * 0.09,
-        elevation: 0,
-        color: AppColors.blueBgTop.withOpacity(0.5),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child: IconButton(
-                // padding: EdgeInsets.all(5),
-                icon: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(
-                      height: size.width * 0.05,
-                      width: size.width * 0.05,
-                      child: ClipOval(
-                        child: Image.asset(
-                          'assets/icons/instructor.png',
-                          fit: BoxFit.cover,
-                          color: _currentIndex == 0
-                              ? Colors.cyan.withOpacity(0.7)
-                              : Colors.white,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      'Revues',
-                      style: TextStyle(
-                        fontSize: size.width * 0.02,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.blueTextColor,
-                      ),
-                    ),
-                  ],
-                ),
-                color: _currentIndex == 0 ? Colors.yellow : Colors.white,
-                onPressed: () {
-                  _pageController.jumpToPage(0);
-                  setState(() {
-                    _currentIndex = 0;
-                  });
-                },
-              ),
-            ),
-            Expanded(
-              child: IconButton(
-                // padding: EdgeInsets.all(5),
-                icon: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(
-                      height: size.width * 0.05,
-                      width: size.width * 0.05,
-                      child: ClipOval(
-                        child: Image.asset(
-                          'assets/icons/video.png',
-                          fit: BoxFit.cover,
-                          color: _currentIndex == 3
-                              ? Colors.cyan.withOpacity(0.7)
-                              : Colors.white,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      'Videos',
-                      style: TextStyle(
-                        fontSize: size.width * 0.02,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.blueTextColor,
-                      ),
-                    ),
-                  ],
-                ),
-                color: _currentIndex == 3 ? Colors.yellow : Colors.white,
-                onPressed: () {
-                  _pageController.jumpToPage(3);
-                  setState(() {
-                    _currentIndex = 3;
-                  });
-                },
-              ),
-            ),
-            Expanded(
-              child: IconButton(
-                // padding: EdgeInsets.all(5),
-                icon: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      height: size.width * 0.05,
-                      width: size.width * 0.05,
-                      child: Icon(
-                        Icons.settings,
-                        size: size.width * 0.041,
-                        color: _currentIndex == 4
-                            ? Colors.cyan.withOpacity(0.7)
-                            : Colors.white,
-                      ),
-                    ),
-                    Text(
-                      'Paramètre',
-                      style: TextStyle(
-                        fontSize: size.width * 0.02,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.blueTextColor,
-                      ),
-                    ),
-                  ],
-                ),
-                onPressed: () {
-                  _pageController.jumpToPage(4);
-                  setState(() {
-                    _currentIndex = 4;
-                  });
-                },
-              ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(size.width * 0.05),
+            topRight: Radius.circular(size.width * 0.05),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.08),
+              blurRadius: 20,
+              offset: Offset(0, -5),
             ),
           ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(size.width * 0.05),
+            topRight: Radius.circular(size.width * 0.05),
+          ),
+          child: SafeArea(
+            child: Container(
+              height: size.height * 0.08,
+              constraints: BoxConstraints(
+                minHeight: 60,
+                maxHeight: 75,
+              ),
+              padding: EdgeInsets.symmetric(
+                horizontal: size.width * 0.02,
+                vertical: size.height * 0.008,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  _buildNavItem(
+                    size: size,
+                    icon: Icons.menu_book_rounded,
+                    label: 'Revues',
+                    index: 0,
+                    isActive: _currentIndex == 0,
+                  ),
+                  _buildNavItem(
+                    size: size,
+                    icon: Icons.play_circle_outline_rounded,
+                    label: 'Vidéos',
+                    index: 3,
+                    isActive: _currentIndex == 3,
+                  ),
+                  _buildNavItem(
+                    size: size,
+                    icon: Icons.psychology_rounded,
+                    label: 'IA',
+                    index: 4,
+                    isActive: _currentIndex == 4,
+                  ),
+                  _buildNavItem(
+                    size: size,
+                    icon: Icons.settings_rounded,
+                    label: 'Profil',
+                    index: 5,
+                    isActive: _currentIndex == 5,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNavItem({
+    required Size size,
+    required IconData icon,
+    required String label,
+    required int index,
+    required bool isActive,
+  }) {
+    // Responsive sizing
+    final double iconSize = size.width * (isActive ? 0.065 : 0.058);
+    final double iconSizeClamped = iconSize.clamp(22.0, 28.0);
+    
+    final double fontSize = size.width * (isActive ? 0.029 : 0.026);
+    final double fontSizeClamped = fontSize.clamp(10.0, 13.0);
+    
+    final double iconPadding = size.width * (isActive ? 0.02 : 0.015);
+    final double iconPaddingClamped = iconPadding.clamp(6.0, 10.0);
+    
+    final double borderRadius = size.width * 0.03;
+    final double borderRadiusClamped = borderRadius.clamp(10.0, 15.0);
+    
+    final double spacing = size.height * 0.004;
+    final double spacingClamped = spacing.clamp(2.0, 4.0);
+    
+    return Expanded(
+      child: InkWell(
+        onTap: () {
+          _pageController.jumpToPage(index);
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        splashColor: AppColors.GreeFonce.withOpacity(0.1),
+        highlightColor: AppColors.GreeFonce.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(borderRadiusClamped),
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            vertical: size.height * 0.005,
+            horizontal: size.width * 0.01,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AnimatedContainer(
+                duration: Duration(milliseconds: 250),
+                curve: Curves.easeInOut,
+                padding: EdgeInsets.all(iconPaddingClamped),
+                decoration: BoxDecoration(
+                  gradient: isActive
+                      ? LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            AppColors.GreeFonce,
+                            AppColors.GreeMedium,
+                          ],
+                        )
+                      : null,
+                  color: isActive ? null : Colors.transparent,
+                  borderRadius: BorderRadius.circular(borderRadiusClamped),
+                  boxShadow: isActive
+                      ? [
+                          BoxShadow(
+                            color: AppColors.GreeFonce.withOpacity(0.35),
+                            blurRadius: 10,
+                            offset: Offset(0, 4),
+                            spreadRadius: 1,
+                          ),
+                        ]
+                      : null,
+                ),
+                child: Icon(
+                  icon,
+                  size: iconSizeClamped,
+                  color: isActive ? Colors.white : Colors.grey[600],
+                ),
+              ),
+              SizedBox(height: spacingClamped),
+              AnimatedDefaultTextStyle(
+                duration: Duration(milliseconds: 250),
+                style: TextStyle(
+                  fontSize: fontSizeClamped,
+                  fontWeight: isActive ? FontWeight.bold : FontWeight.w600,
+                  color: isActive ? AppColors.GreeFonce : Colors.grey[600],
+                  letterSpacing: 0.2,
+                ),
+                child: Text(
+                  label,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
