@@ -1,280 +1,565 @@
-import 'package:flelobna/controller/course_controller.dart';
+import 'package:flelobna/viewmodels/course_viewmodel.dart';
+import 'package:flelobna/viewmodels/favorite_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:flelobna/constants/app_colors.dart';
 import 'package:flelobna/models/course.dart';
 import 'package:flelobna/screens/course/detail_course.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
-class ListCourses extends StatefulWidget {
-  ListCourses({Key? key});
+class ListCourses extends StatelessWidget {
+  const ListCourses({Key? key}) : super(key: key);
 
-  @override
-  State<ListCourses> createState() => _ListCoursesState();
-}
-
-class _ListCoursesState extends State<ListCourses> {
-  CourseController courseController = Get.put(CourseController());
-
-  bool isIOS() {
-    return Theme.of(context).platform == TargetPlatform.iOS;
-  }
-
-  Future<void> signOutFromApple() async {
-    await GetStorage().remove('email');
-    await GetStorage().remove('familyName');
-    await GetStorage().remove('givenName');
-  }
-
-  void showConnectWithAppleDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              GetStorage().read('familyName') != null
-                  ? ElevatedButton(
-                      onPressed: () async {
-                        await signOutFromApple();
-                        Navigator.of(context).pop();
-                      },
-                      child: Text('Sign Out'),
-                    )
-                  : Container(),
-              GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Icon(
-                    Icons.cancel_outlined,
-                    color: Colors.red,
-                  ))
-            ],
-          ),
-          content: Text(
-              'Souhaitez-vous vous connecter avec votre identifiant Apple?'),
-          actions: <Widget>[
-            SignInWithAppleButton(
-              onPressed: () async {
-                final credential = await SignInWithApple.getAppleIDCredential(
-                  scopes: [
-                    AppleIDAuthorizationScopes.email,
-                    AppleIDAuthorizationScopes.fullName,
-                  ],
-                );
-                GetStorage().write('email', credential.email);
-                GetStorage().write('familyName', credential.familyName);
-                GetStorage().write('givenName', credential.givenName);
-                Navigator.of(context).pop();
-
-                print(credential);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> _onRefresh() async {
-    await courseController.fetchCourses();
+  Future<void> _onRefresh(CourseViewModel viewModel) async {
+    await viewModel.refreshCourses();
   }
 
   @override
   Widget build(BuildContext context) {
+    final CourseViewModel viewModel = Get.find<CourseViewModel>();
     Size size = MediaQuery.of(context).size;
+    
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              'Liste des Revues',
-              style: TextStyle(
-                fontSize: size.width * 0.05,
-                fontWeight: FontWeight.bold,
-                letterSpacing: size.width * 0.003,
-                color: AppColors.blueTextColor,
-              ),
-            ),
-            // isIOS()
-            //     ? GestureDetector(
-            //         onTap: () {
-            //           showConnectWithAppleDialog();
-            //           print(GetStorage().read('email'));
-            //         },
-            //         child: Icon(
-            //           Icons.person,
-            //           color: AppColors.blueTextColor,
-            //         ),
-            //       )
-            //     : Container()
-          ],
-        ),
-        elevation: 0,
-        backgroundColor: AppColors.blueBgTop,
-      ),
-      body: RefreshIndicator(
-        onRefresh: _onRefresh,
-        child: Container(
-          height: size.height,
-          width: size.width,
-          padding: EdgeInsets.all(size.height * 0.02),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [AppColors.blueBgTop, AppColors.blueBgBottom],
-            ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              AppColors.blueBgTop,
+              AppColors.GreeFonce,
+              AppColors.blueBgBottom,
+            ],
+            stops: [0.0, 0.5, 1.0],
           ),
+        ),
+        child: SafeArea(
           child: Column(
             children: [
-              SizedBox(
-                height: size.height * 0.08,
-                child: TextField(
-                  onChanged: (query) {
-                    courseController.filterList(query);
-                  },
-                  decoration: InputDecoration(
-                    labelText: 'Rechercher',
-                    hintText: 'Veuillez saisir le nom d\'un revue',
-                    prefixIcon: Icon(Icons.search),
-                    fillColor: Colors.white54,
-                    filled: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide.none,
+              // Header
+              Padding(
+                padding: EdgeInsets.all(size.width * 0.05),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Revues',
+                      style: TextStyle(
+                        fontSize: size.width * 0.08,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        letterSpacing: 1,
+                      ),
                     ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: size.height * 0.01,
-              ),
-              Expanded(
-                child: Obx(
-                  () => ListView.separated(
-                    itemCount: courseController.filteredList.value.length,
-                    separatorBuilder: (context, index) {
-                      return SizedBox(height: size.height * 0.01);
-                    },
-                    itemBuilder: (context, index) {
-                      final course = courseController.filteredList.value[index];
-                      return GestureDetector(
-                        onTap: () {
-                          // Navigate to detail course screen here
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  DetailCourse(course: course)));
-                        },
-                        child: Container(
-                          width: size.width * 0.9,
-                          height: size.height * 0.17,
-                          padding: EdgeInsets.symmetric(
-                              vertical: size.height * 0.01,
-                              horizontal: size.height * 0.01),
-                          decoration: BoxDecoration(
-                            color: Colors.white54,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.cyan.withOpacity(0.3),
-                                offset: Offset(0, 2),
-                                blurRadius: 4,
-                              ),
-                            ],
+                    SizedBox(height: 6),
+                    Text(
+                      'Documents PDF disponibles',
+                      style: TextStyle(
+                        fontSize: size.width * 0.038,
+                        color: Colors.white.withOpacity(0.8),
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    
+                    // Search Bar
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 20,
+                            offset: Offset(0, 10),
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: size.width * 0.2,
-                                height: size.height * 0.15,
-                                child: Image.network(
-                                  course.couverture!,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                              Container(
-                                width: size.width * 0.5,
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      course.name!,
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      "Produit par : ${course.description}",
-                                      style: TextStyle(fontSize: 12),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: size.width * 0.1,
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    // GestureDetector(
-                                    //   onTap: () {
-                                    //     courseController
-                                    //         // .downloadFirebasePDF(
-                                    //         //     course.pathPdf)
-                                    //     // .downloadFile('document.pdf', course.pathPdf)
-                                    //     // .savePdfToDevice('assets/files/1.pdf', 'document.pdf')
-                                    //     .downloadAndSaveFile(course.pathPdf, 'document.pdf')
-                                    //         .then((_) {
-                                    //       print('success');
-                                    //       // File has been downloaded successfully
-                                    //     }).catchError((error) {
-                                    //       // Handle any errors that occurred during the download process
-                                    //       print('Error: $error');
-                                    //     });
-                                    //   },
-                                    //   child: Container(
-                                    //       width: size.width * 0.1,
-                                    //       alignment: Alignment.topRight,
-                                    //       child: Icon(Icons.download)),
-                                    // ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    DetailCourse(
-                                                        course: course)));
-                                      },
-                                      child: Container(
-                                          width: size.width * 0.1,
-                                          alignment: Alignment.topRight,
-                                          child: Icon(
-                                            Icons.arrow_forward_ios_sharp,
-                                            size: 18,
-                                          )),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                        ],
+                      ),
+                      child: TextField(
+                        onChanged: (query) {
+                          viewModel.filterCourses(query);
+                        },
+                        style: TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          hintText: 'Rechercher une revue...',
+                          hintStyle: TextStyle(
+                            color: Colors.white.withOpacity(0.6),
+                          ),
+                          prefixIcon: Icon(
+                            Icons.search_rounded,
+                            color: Colors.white.withOpacity(0.8),
+                          ),
+                          filled: true,
+                          fillColor: Colors.white.withOpacity(0.15),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16),
+                            borderSide: BorderSide.none,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16),
+                            borderSide: BorderSide(
+                              color: Colors.white.withOpacity(0.2),
+                              width: 1,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16),
+                            borderSide: BorderSide(
+                              color: Colors.white,
+                              width: 2,
+                            ),
+                          ),
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 16,
                           ),
                         ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Courses List
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: () => _onRefresh(viewModel),
+                  color: AppColors.GreeFonce,
+                  backgroundColor: Colors.white,
+                  child: Obx(
+                    () {
+                      if (viewModel.filteredCourses.isEmpty) {
+                        return _buildEmptyState(size);
+                      }
+                      
+                      return ListView.builder(
+                        physics: BouncingScrollPhysics(),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: size.width * 0.05,
+                          vertical: size.height * 0.01,
+                        ),
+                        itemCount: viewModel.filteredCourses.length,
+                        itemBuilder: (context, index) {
+                          final course = viewModel.filteredCourses[index];
+                          return _buildCourseCard(context, course, size);
+                        },
                       );
                     },
                   ),
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEmptyState(Size size) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.menu_book_rounded,
+            size: size.width * 0.25,
+            color: Colors.white.withOpacity(0.3),
+          ),
+          SizedBox(height: size.height * 0.02),
+          Text(
+            'Aucune revue trouvée',
+            style: TextStyle(
+              fontSize: size.width * 0.045,
+              color: Colors.white.withOpacity(0.7),
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          SizedBox(height: size.height * 0.01),
+          Text(
+            'Essayez une autre recherche',
+            style: TextStyle(
+              fontSize: size.width * 0.035,
+              color: Colors.white.withOpacity(0.5),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCourseCard(BuildContext context, Course course, Size size) {
+    final FavoriteViewModel favoriteVM = Get.find<FavoriteViewModel>();
+    final GetStorage storage = GetStorage();
+    final userEmail = storage.read('email') ?? '';
+    
+    // Get comment count
+    final int commentCount = course.commentaire?.length ?? 0;
+    
+    // Check if favorited
+    final bool isFavorite = userEmail.isNotEmpty && 
+        favoriteVM.favoriteCourses.contains(course.name);
+    
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => DetailCourse(course: course),
+          ),
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.only(bottom: size.height * 0.015),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.15),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: Colors.white.withOpacity(0.2),
+            width: 1,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 15,
+              offset: Offset(0, 8),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => DetailCourse(course: course),
+                  ),
+                );
+              },
+              child: Padding(
+                padding: EdgeInsets.all(size.width * 0.04),
+                child: Row(
+                  children: [
+                    // Course Cover Image with Badges
+                    Stack(
+                      children: [
+                        Hero(
+                          tag: 'course-${course.name}',
+                          child: Container(
+                            width: size.width * 0.22,
+                            height: size.width * 0.28,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  blurRadius: 10,
+                                  offset: Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.network(
+                                course.couverture!,
+                                fit: BoxFit.cover,
+                                loadingBuilder: (context, child, loadingProgress) {
+                                  if (loadingProgress == null) return child;
+                                  return Container(
+                                    color: Colors.white.withOpacity(0.1),
+                                    child: Center(
+                                      child: CircularProgressIndicator(
+                                        valueColor: AlwaysStoppedAnimation<Color>(
+                                          Colors.white,
+                                        ),
+                                        strokeWidth: 2,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Container(
+                                    color: Colors.white.withOpacity(0.1),
+                                    child: Icon(
+                                      Icons.broken_image_rounded,
+                                      color: Colors.white.withOpacity(0.5),
+                                      size: 40,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        
+                        // Favorite Badge
+                        if (isFavorite)
+                          Positioned(
+                            top: 4,
+                            right: 4,
+                            child: Container(
+                              padding: EdgeInsets.all(6),
+                              decoration: BoxDecoration(
+                                color: Colors.red.withOpacity(0.9),
+                                borderRadius: BorderRadius.circular(8),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.3),
+                                    blurRadius: 4,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: Icon(
+                                Icons.favorite,
+                                color: Colors.white,
+                                size: 14,
+                              ),
+                            ),
+                          ),
+                        
+                        // Comment Count Badge
+                        if (commentCount > 0)
+                          Positioned(
+                            bottom: 4,
+                            right: 4,
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    AppColors.GreeFonce,
+                                    AppColors.GreeMedium,
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.3),
+                                    blurRadius: 4,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.comment_rounded,
+                                    color: Colors.white,
+                                    size: 12,
+                                  ),
+                                  SizedBox(width: 4),
+                                  Text(
+                                    '$commentCount',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+
+                    SizedBox(width: size.width * 0.04),
+
+                    // Course Info
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  course.name ?? 'Sans titre',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    letterSpacing: 0.3,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              if (isFavorite)
+                                Container(
+                                  margin: EdgeInsets.only(left: 8),
+                                  padding: EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                    color: Colors.red.withOpacity(0.2),
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: Icon(
+                                    Icons.favorite,
+                                    color: Colors.red,
+                                    size: 14,
+                                  ),
+                                ),
+                            ],
+                          ),
+                          SizedBox(height: 6),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.person_outline,
+                                size: 14,
+                                color: Colors.white.withOpacity(0.7),
+                              ),
+                              SizedBox(width: 4),
+                              Expanded(
+                                child: Text(
+                                  course.description ?? 'Aucune description',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.white.withOpacity(0.7),
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 6),
+                          Row(
+                            children: [
+                              // File size
+                              Icon(
+                                Icons.insert_drive_file_outlined,
+                                size: 14,
+                                color: Colors.white.withOpacity(0.7),
+                              ),
+                              SizedBox(width: 4),
+                              Text(
+                                course.size ?? 'Taille inconnue',
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  color: Colors.white.withOpacity(0.6),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 8),
+                          // Stats Row (Favorites and Comments)
+                          Row(
+                            children: [
+                              // Favorite Count
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Colors.red.withOpacity(0.8),
+                                      Colors.pink.withOpacity(0.8),
+                                    ],
+                                  ),
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.1),
+                                      blurRadius: 4,
+                                      offset: Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.favorite,
+                                      size: 12,
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(width: 4),
+                                    Text(
+                                      '${course.favorites?.length ?? 0}',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(width: 8),
+                              // Comment Count
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      AppColors.GreeFonce,
+                                      AppColors.GreeMedium,
+                                    ],
+                                  ),
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.1),
+                                      blurRadius: 4,
+                                      offset: Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.comment,
+                                      size: 12,
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(width: 4),
+                                    Text(
+                                      '$commentCount',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    SizedBox(width: size.width * 0.02),
+
+                    // Arrow Icon
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Colors.white,
+                        size: 18,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
       ),
